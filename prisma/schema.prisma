@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String?
+  phone     String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+
+  // Profile Fields
+  dateOfBirth DateTime?
+  gender      String?
+  age         Int?
+  occupation  String?
+  biography   String?
+  profilePicUrl String?
+  
+  trips     Trip[]
+  chatSessions ChatSession[]
+}
+
+model ChatSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id            String      @id @default(uuid())
+  chatSessionId String
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  
+  role      String   // 'user' or 'ai'
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Trip {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  source       String
+  destination  String
+  days         Int
+  nights       Int
+  budget       Int
+  travelers    Int
+  preferences  String
+  travelStyle  String
+  
+  createdAt    DateTime @default(now())
+  
+  itineraries  Itinerary[]
+}
+
+model Itinerary {
+  id                  String   @id @default(uuid())
+  tripId              String
+  trip                Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  
+  fullItineraryJson   Json
+  totalCost           Int
+  pdfUrl              String?
+  
+  createdAt           DateTime @default(now())
+}
+
+model Place {
+  id          String   @id @default(uuid())
+  name        String
+  city        String
+  description String
+  imageUrl    String?
+  category    String   // 'tourist' | 'hidden gem' | 'food' | 'cultural'
+  avgCost     Int      @default(0)
+}
