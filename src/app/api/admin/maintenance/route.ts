@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const authHeader = request.headers.get('authorization');
     const expectedSecret = process.env.CRON_SECRET;
 
-    if (!expectedSecret || authHeader !== \`Bearer \${expectedSecret}\`) {
+    if (!expectedSecret || authHeader !== `Bearer ${expectedSecret}`) {
       return NextResponse.json({ error: 'Unauthorized. Invalid Cron Secret.' }, { status: 401 });
     }
 

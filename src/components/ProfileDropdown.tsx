@@ -39,8 +39,8 @@ export default function ProfileDropdown({ user }: ProfileDropdownProps) {
         className="flex items-center gap-2 group focus:outline-none"
         aria-label="User menu"
       >
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-[0_0_15px_rgba(245,158,11,0.5)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] border-2 border-amber-400/30">
-          {initial}
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-[0_0_15px_rgba(245,158,11,0.5)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] border-2 border-amber-400/30 overflow-hidden">
+          {user?.profilePicUrl ? <img src={user.profilePicUrl} alt="User" className="w-full h-full object-cover" /> : initial}
         </div>
         <ChevronDown
           size={16}
@@ -56,8 +56,8 @@ export default function ProfileDropdown({ user }: ProfileDropdownProps) {
         {/* User Info Header */}
         <div className="p-4 border-b border-white/10 bg-gradient-to-r from-amber-600/10 to-transparent">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shrink-0">
-              {initial}
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shrink-0 overflow-hidden">
+              {user?.profilePicUrl ? <img src={user.profilePicUrl} alt="User" className="w-full h-full object-cover" /> : initial}
             </div>
             <div className="min-w-0">
               <p className="font-bold text-white truncate">{user?.name || "Traveler"}</p>
@@ -68,10 +68,12 @@ export default function ProfileDropdown({ user }: ProfileDropdownProps) {
 
         {/* Menu Items */}
         <div className="p-2">
-          <Link
-            href="/profile"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all group/item"
+          <button
+            onClick={() => {
+              setOpen(false);
+              router.push("/profile");
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all group/item text-left"
           >
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center group-hover/item:bg-amber-500/20 transition-colors">
               <User size={16} />
@@ -80,12 +82,14 @@ export default function ProfileDropdown({ user }: ProfileDropdownProps) {
               <p className="font-semibold text-sm">My Profile</p>
               <p className="text-xs text-slate-500">Edit personal info</p>
             </div>
-          </Link>
+          </button>
 
-          <Link
-            href="/dashboard"
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all group/item"
+          <button
+            onClick={() => {
+              setOpen(false);
+              router.push("/dashboard");
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all group/item text-left"
           >
             <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-500 flex items-center justify-center group-hover/item:bg-teal-500/20 transition-colors">
               <Settings size={16} />
@@ -94,7 +98,7 @@ export default function ProfileDropdown({ user }: ProfileDropdownProps) {
               <p className="font-semibold text-sm">Dashboard</p>
               <p className="text-xs text-slate-500">View saved trips</p>
             </div>
-          </Link>
+          </button>
         </div>
 
         {/* Logout */}

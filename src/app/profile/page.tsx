@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,9 +22,10 @@ export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
 
   // Form fields
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
@@ -51,8 +52,6 @@ export default function ProfilePage() {
     const token = localStorage.getItem("token");
     if (!token) { router.push("/login"); return; }
 
-    if (document.documentElement.classList.contains("light-mode")) setIsLightMode(true);
-
     const fetchProfile = async () => {
       try {
         const res = await fetch("/api/auth/me", {
@@ -69,6 +68,7 @@ export default function ProfilePage() {
           setBiography(u.biography || "");
           setAge(u.age?.toString() || "");
           setDateOfBirth(u.dateOfBirth ? u.dateOfBirth.split("T")[0] : "");
+          setProfilePicUrl(u.profilePicUrl || "");
         } else {
           router.push("/login");
         }
@@ -81,14 +81,40 @@ export default function ProfilePage() {
     fetchProfile();
   }, [router]);
 
-  const toggleTheme = () => {
-    if (isLightMode) {
-      document.documentElement.classList.remove("light-mode");
-      setIsLightMode(false);
-    } else {
-      document.documentElement.classList.add("light-mode");
-      setIsLightMode(true);
-    }
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = document.createElement("img");
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const MAX_SIZE = 300;
+        let width = img.width;
+        let height = img.height;
+        if (width > height) {
+          if (width > MAX_SIZE) {
+            height *= MAX_SIZE / width;
+            width = MAX_SIZE;
+          }
+        } else {
+          if (height > MAX_SIZE) {
+            width *= MAX_SIZE / height;
+            height = MAX_SIZE;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, width, height);
+        // Compress as JPEG
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.7);
+        setProfilePicUrl(dataUrl);
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSave = async () => {
@@ -98,7 +124,7 @@ export default function ProfilePage() {
       const res = await fetch("/api/auth/me", {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ name, phone, gender, occupation, biography, age: age ? parseInt(age) : undefined, dateOfBirth: dateOfBirth || undefined })
+        body: JSON.stringify({ name, phone, gender, occupation, biography, age: age ? parseInt(age) : undefined, dateOfBirth: dateOfBirth || undefined, profilePicUrl })
       });
       if (res.ok) {
         const data = await res.json();
@@ -151,9 +177,6 @@ export default function ProfilePage() {
             <span className="font-extrabold tracking-tight text-2xl text-amber-500 drop-shadow-md">NaviBharat</span>
           </Link>
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-slate-300 hover:text-amber-400 hover:bg-slate-900/50 rounded-xl transition-all">
-              {isLightMode ? <Moon size={20} /> : <Sun size={20} />}
-            </Button>
             {user && <ProfileDropdown user={user} />}
           </div>
         </div>
@@ -182,9 +205,17 @@ export default function ProfilePage() {
             <div className="px-8 pb-8 -mt-10 relative">
               <div className="flex flex-col sm:flex-row items-start sm:items-end gap-6">
                 {/* Avatar */}
-                <div className="relative group cursor-pointer">
-                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-700 to-amber-400 flex items-center justify-center text-slate-950 font-black text-5xl shadow-[0_0_30px_rgba(245,158,11,0.5)] border-4 border-slate-900 ring-2 ring-amber-500/30 transition-all group-hover:shadow-[0_0_40px_rgba(245,158,11,0.7)]">
-                    {initial}
+                <div 
+                  className="relative group cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
+                  <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-amber-700 to-amber-400 flex items-center justify-center text-slate-950 font-black text-5xl shadow-[0_0_30px_rgba(245,158,11,0.5)] border-4 border-slate-900 ring-2 ring-amber-500/30 transition-all group-hover:shadow-[0_0_40px_rgba(245,158,11,0.7)] overflow-hidden">
+                    {profilePicUrl ? (
+                      <img src={profilePicUrl} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      initial
+                    )}
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-amber-500 rounded-lg flex items-center justify-center shadow-lg">
                     <Edit3 size={13} className="text-slate-950" />
@@ -209,7 +240,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col items-end gap-2 text-right shrink-0">
                   <div className="flex items-center gap-2 text-xs text-slate-500">
                     <CalendarDays size={12} />
-                    <span>Joined {new Date(user?.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</span>
+                    <span>Joined {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) : "-"}</span>
                   </div>
                 </div>
               </div>
@@ -240,7 +271,7 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-bold uppercase tracking-widest text-slate-400">Gender</Label>
-                <Select value={gender} onValueChange={setGender}>
+                <Select value={gender} onValueChange={(val) => setGender(val || "")}>
                   <SelectTrigger className="h-12 bg-slate-950/80 border-white/10 text-white rounded-xl focus:border-amber-500">
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
@@ -319,7 +350,7 @@ export default function ProfilePage() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 uppercase tracking-wider font-bold">Member Since</p>
-                  <p className="text-xl font-black text-white">{new Date(user?.createdAt).getFullYear()}</p>
+                  <p className="text-xl font-black text-white">{user?.createdAt ? new Date(user.createdAt).getFullYear() : "-"}</p>
                 </div>
               </div>
               <Separator orientation="vertical" className="h-12 hidden sm:block bg-white/10" />

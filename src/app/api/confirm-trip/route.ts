@@ -36,28 +36,25 @@ export async function POST(req: Request) {
     });
 
     // 2. Save Itinerary to DB
-    const totalCostStr = itineraryData.estimated_cost?.total?.replace(/\D/g, '') || "0";
-    const totalCost = parseInt(totalCostStr, 10) || 0;
+    const totalCostRaw = itineraryData.estimated_cost?.total || "0";
+    const firstCostPart = totalCostRaw.split('-')[0].replace(/\D/g, '');
+    const totalCost = Math.min(parseInt(firstCostPart, 10) || 0, 2000000000);
+
+    // PDF generation removed for Vercel compatibility.
+    const mockPdfUrl = 'https://navibharat.temp/pdf/placeholder.pdf';
 
     const itinerary = await prisma.itinerary.create({
       data: {
         tripId: trip.id,
         fullItineraryJson: itineraryData,
         totalCost,
+        pdfUrl: mockPdfUrl
       }
     });
 
-    // PDF generation and WhatsApp notification removed for Vercel compatibility and user request.
-    const mockPdfUrl = 'https://navibharat.temp/pdf/' + itinerary.id + '.pdf'; // Placeholder
-
-    await prisma.itinerary.update({
-      where: { id: itinerary.id },
-      data: { pdfUrl: mockPdfUrl }
-    });
-
-    // 3. Send Email via Resend
-    if (decoded.email) {
-      await resend.emails.send({
+    // 3. Send Email via Resend (Only if a real API key is configured)
+    if (decoded.email && process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 'default') {
+      resend.emails.send({
         from: 'NaviBharat <onboarding@resend.dev>',
         to: decoded.email,
         subject: 'Your NaviBharat Itinerary is Confirmed!',
@@ -66,8 +63,7 @@ export async function POST(req: Request) {
                <p>You can view your detailed timeline on your dashboard.</p>
                <br/>
                <p>Safe travels,<br/>The NaviBharat Team</p>`,
-        // Removed PDF attachment as it is no longer generated server-side
-      });
+      }).catch(err => console.error("Silent email fail:", err));
     }
 
     return NextResponse.json({ message: 'Trip Confirmed successfully', tripId: trip.id }, { status: 200 });

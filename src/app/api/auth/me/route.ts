@@ -39,7 +39,7 @@ export async function PUT(req: Request) {
   if (!decoded) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const { name, phone, password, dateOfBirth, gender, age, occupation, biography } = await req.json();
+    const { name, phone, password, dateOfBirth, gender, age, occupation, biography, profilePicUrl } = await req.json();
 
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
@@ -47,6 +47,7 @@ export async function PUT(req: Request) {
     if (gender !== undefined) updateData.gender = gender;
     if (occupation !== undefined) updateData.occupation = occupation;
     if (biography !== undefined) updateData.biography = biography;
+    if (profilePicUrl !== undefined) updateData.profilePicUrl = profilePicUrl;
     if (age !== undefined) updateData.age = typeof age === 'string' ? parseInt(age) : age;
     if (dateOfBirth !== undefined) updateData.dateOfBirth = dateOfBirth ? new Date(dateOfBirth) : null;
     if (password) {

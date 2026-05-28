@@ -346,7 +346,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
             <Button onClick={handleEmailItinerary} disabled={emailing} variant="outline" className="text-white bg-slate-900 border-slate-700 hover:bg-slate-800 hover:text-white transition-colors">
               <Mail size={16} className="mr-2" /> {emailing ? "Sending..." : "Email PDF"}
             </Button>
-            <Button variant="outline" className="text-white bg-slate-900 border-slate-700 hover:bg-slate-800 hover:text-white transition-colors">
+            <Button onClick={handleDownloadPdf} variant="outline" className="text-white bg-slate-900 border-slate-700 hover:bg-slate-800 hover:text-white transition-colors">
               <Download size={16} className="mr-2" /> Download
             </Button>
             {id === 'new' && (
@@ -662,7 +662,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
           <Button onClick={handleEmailItinerary} disabled={emailing} variant="outline" className="flex-1 bg-black">
             <Mail size={18} className={emailing ? "animate-pulse text-teal-500" : ""} />
           </Button>
-          <Button variant="outline" className="flex-1 bg-black">
+          <Button onClick={handleDownloadPdf} variant="outline" className="flex-1 bg-black">
             <Download size={18} />
           </Button>
           <Button variant="outline" className="flex-1 bg-black">
