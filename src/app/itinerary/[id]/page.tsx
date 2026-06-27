@@ -228,7 +228,6 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
   const handleDownloadPdf = async () => {
     try {
       showModal("success", "Generating PDF", "Please wait while we prepare your document...", closeModal, "Okay");
-      const html2pdf = (await import('html2pdf.js')).default;
       
       const dest = tripParams?.destination || 'Destination';
       const days = tripParams?.days || 0;
@@ -294,24 +293,37 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
       const element = document.createElement('div');
       element.innerHTML = htmlContent;
       
-      // Fix for html2canvas: element MUST be in the DOM to render properly
-      element.style.position = 'absolute';
-      element.style.left = '-9999px';
-      element.style.top = '-9999px';
-      document.body.appendChild(element);
+      // Open a hidden iframe or new window to print the document natively
+      const printWindow = window.open('', '_blank');
+      if (!printWindow) {
+        showModal("error", "Popup Blocked", "Please allow popups to download the PDF.", closeModal, "Close");
+        return;
+      }
       
-      const opt = {
-        margin:       10,
-        filename:     `NaviBharat_Itinerary_${dest.replace(/\s+/g, '_')}.pdf`,
-        image:        { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      await html2pdf().set(opt as any).from(element).save();
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>NaviBharat_Itinerary_${dest.replace(/\s+/g, '_')}</title>
+            <style>
+              @media print {
+                @page { margin: 10mm; }
+                body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+              }
+            </style>
+          </head>
+          <body>
+            ${htmlContent}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
       
-      document.body.removeChild(element);
-      setTimeout(() => closeModal(), 1500);
+      // Wait a tiny bit for styles to compute before triggering print dialog
+      setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+        setTimeout(() => closeModal(), 500);
+      }, 250);
     } catch (error) {
       console.error(error);
       showModal("error", "Generation Failed", "Failed to generate PDF document on this device.", closeModal, "Close");
