@@ -294,6 +294,12 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
       const element = document.createElement('div');
       element.innerHTML = htmlContent;
       
+      // Fix for html2canvas: element MUST be in the DOM to render properly
+      element.style.position = 'absolute';
+      element.style.left = '-9999px';
+      element.style.top = '-9999px';
+      document.body.appendChild(element);
+      
       const opt = {
         margin:       10,
         filename:     `NaviBharat_Itinerary_${dest.replace(/\s+/g, '_')}.pdf`,
@@ -304,6 +310,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
 
       await html2pdf().set(opt).from(element).save();
       
+      document.body.removeChild(element);
       setTimeout(() => closeModal(), 1500);
     } catch (error) {
       console.error(error);
