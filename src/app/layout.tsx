@@ -21,6 +21,9 @@ const yatra = Yatra_One({
 export const metadata: Metadata = {
   title: "NaviBharat | AI Travel Itineraries",
   description: "Discover your next great adventure mapped by AI.",
+  verification: {
+    google: "uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4",
+  },
 };
 
 export default function RootLayout({
