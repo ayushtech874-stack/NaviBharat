@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     }
 
     try {
-      await resend.emails.send({
+      const { data, error } = await resend.emails.send({
         from: 'NaviBharat Feedback <onboarding@resend.dev>', // Needs to be a verified domain or resend's test domain
         to: 'ayushtech874@gmail.com',
         subject: `New Feedback from ${name}`,
@@ -23,6 +23,11 @@ export async function POST(req: Request) {
           <blockquote>${feedback}</blockquote>
         `,
       });
+
+      if (error) {
+        console.error('Resend API Error Details:', error);
+        return NextResponse.json({ error: error.message }, { status: 400 });
+      }
     } catch (emailErr) {
       console.error('Resend email failed:', emailErr);
       return NextResponse.json({ error: 'Failed to send feedback email. Check your Resend API Key.' }, { status: 500 });
