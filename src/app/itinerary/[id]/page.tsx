@@ -308,7 +308,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      await html2pdf().set(opt).from(element).save();
+      await html2pdf().set(opt as any).from(element).save();
       
       document.body.removeChild(element);
       setTimeout(() => closeModal(), 1500);
