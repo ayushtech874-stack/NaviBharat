@@ -226,32 +226,88 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
 
 
   const handleDownloadPdf = async () => {
-    const tripId = id;
-    if (tripId === 'new' || !tripId) {
-       showModal("alert", "Not Saved Yet", "Please click 'Confirm Trip' to save this itinerary first before downloading the PDF!", closeModal, "Got it");
-       return;
-    }
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`/api/download-itinerary/${tripId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const blob = await res.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `NaviBharat_${tripId.substring(0,6)}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-        showModal("success", "Download Started", "Your PDF document is ready.", closeModal, "Great");
-      } else {
-        showModal("error", "Generation Failed", "Failed to generate PDF document.", closeModal, "Close");
-      }
-    } catch {
-      showModal("error", "Network Error", "Network error while downloading PDF.", closeModal, "Close");
+      showModal("success", "Generating PDF", "Please wait while we prepare your document...", closeModal, "Okay");
+      const html2pdf = (await import('html2pdf.js')).default;
+      
+      const dest = tripParams?.destination || 'Destination';
+      const days = tripParams?.days || 0;
+      const style = tripParams?.travelStyle || 'Unknown';
+      
+      const htmlContent = `
+        <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; background: white; padding: 20px; line-height: 1.6;">
+          <h1 style="color: #d97706; border-bottom: 2px solid #fde68a; padding-bottom: 10px; margin-bottom: 30px; font-size: 32px;">NaviBharat Trip to ${dest}</h1>
+          
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 40px; display: flex; flex-wrap: wrap; gap: 15px;">
+            <p style="margin: 0; min-width: 200px; color: #475569;"><strong>Duration:</strong> ${days} Days</p>
+            <p style="margin: 0; min-width: 200px; color: #475569;"><strong>Style:</strong> ${style}</p>
+          </div>
+
+          ${itineraryData?.itinerary?.map((day: any) => `
+            <div style="margin-bottom: 40px; page-break-inside: avoid;">
+              <div style="background: #0f172a; color: white; padding: 12px 20px; border-radius: 8px 8px 0 0; font-weight: bold; font-size: 20px;">Day ${day.day} Plan</div>
+              ${day.activities?.map((activity: any) => `
+                <div style="border: 1px solid #e2e8f0; border-top: none; padding: 15px 20px; background: white;">
+                  <div style="font-weight: bold; color: #d97706; text-transform: capitalize; margin-bottom: 5px; font-size: 18px;">${activity.time_of_day} - ${activity.place}</div>
+                  <div style="font-size: 15px;">${activity.description}</div>
+                  <div style="font-size: 13px; color: #64748b; margin-top: 8px; padding: 6px; background: #f1f5f9; border-radius: 4px;">
+                    <b>Travel:</b> ${activity.transport_to_place || activity.travel_time_from_prev} <br/> <b>Duration:</b> ${activity.time_to_spend_there}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `).join('') || ''}
+
+          <div style="page-break-before: always;"></div>
+
+          <h1 style="color: #d97706; border-bottom: 2px solid #fde68a; padding-bottom: 10px; margin-bottom: 30px; font-size: 32px;">Trip Overview & Cost Breakdown</h1>
+          
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 40px;">
+            <h3 style="width: 100%; margin-top: 0; color: #0f172a;">Source to Destination Transit Options</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            ${itineraryData?.transit_options ? itineraryData.transit_options.map((opt: any) => `
+              <div style="padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; flex: 1; text-align: center; background: white;">
+                 <strong style="color: #64748b; display: block;">${opt.mode}</strong>
+                 <span style="font-size: 20px; font-weight: bold; color: #d97706;">${opt.estimated_cost}</span>
+                 <div style="font-size: 12px; color: #94a3b8;">${opt.duration}</div>
+              </div>
+            `).join('') : '<p>No transit approximations listed.</p>'}
+            </div>
+            <div style="width: 100%; font-size: 12px; color: #d97706; margin-top: 10px;">* Note: The local budget below DOES NOT include the Source-to-Destination inbound transit cost.</div>
+          </div>
+
+          <div style="background: #ecfdf5; padding: 25px; border-radius: 12px; border: 1px solid #a7f3d0; margin-top: 40px;">
+            <h2 style="margin-top: 0; padding-top: 0; border-bottom: 1px solid #6ee7b7; color: #047857;">Local Estimated Cost Breakdown</h2>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #d1fae5; padding-bottom: 8px; font-size: 16px;"><span>Stay & Accommodation</span> <span>${itineraryData?.estimated_cost?.stay || 'N/A'}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #d1fae5; padding-bottom: 8px; font-size: 16px;"><span>Food & Dining</span> <span>${itineraryData?.estimated_cost?.food || 'N/A'}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #d1fae5; padding-bottom: 8px; font-size: 16px;"><span>Local Transport</span> <span>${itineraryData?.estimated_cost?.transport || 'N/A'}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #d1fae5; padding-bottom: 8px; font-size: 16px;"><span>Entry Fees</span> <span>${itineraryData?.estimated_cost?.entry_fees || 'N/A'}</span></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 10px; border-top: 2px solid #34d399; font-weight: 900; font-size: 24px; color: #047857;"><span>Total Local Estimate</span> <span>${itineraryData?.estimated_cost?.total || 'N/A'}</span></div>
+          </div>
+
+          <div style="margin-top: 60px; text-align: center; color: #94a3b8; font-size: 14px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+            Generated specially for you by NaviBharat AI.
+          </div>
+        </div>
+      `;
+
+      const element = document.createElement('div');
+      element.innerHTML = htmlContent;
+      
+      const opt = {
+        margin:       10,
+        filename:     `NaviBharat_Itinerary_${dest.replace(/\s+/g, '_')}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      await html2pdf().set(opt).from(element).save();
+      
+      setTimeout(() => closeModal(), 1500);
+    } catch (error) {
+      console.error(error);
+      showModal("error", "Generation Failed", "Failed to generate PDF document on this device.", closeModal, "Close");
     }
   };
 
