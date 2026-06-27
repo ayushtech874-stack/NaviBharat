@@ -431,9 +431,6 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
             <button onClick={() => setActiveTab("budget")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'budget' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-[#d8c3ad] hover:text-white'}`}>Costs</button>
           </div>
           <div className="flex items-center gap-4 w-full md:w-auto">
-            <button onClick={handleEmailItinerary} disabled={emailing} className="hidden md:flex items-center gap-2 text-[#d8c3ad] hover:text-white transition-colors px-4 text-sm font-semibold">
-              <Mail size={18} /> {emailing ? "Sending..." : "Email PDF"}
-            </button>
             {id === 'new' && (
                <button disabled={saving} onClick={handleConfirm} className="flex-1 md:flex-none px-8 py-3 rounded-xl bg-gradient-to-r from-[#04b4a2] to-[#0d9488] text-[#003731] font-bold text-sm shadow-lg shadow-[#4fdbc8]/10 hover:scale-[1.02] active:scale-95 transition-all">
                   {saving ? "Saving..." : "Confirm Trip"}
