@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { MapPin, Compass, Calendar, Globe2, Navigation, Sun, Moon } from "lucide-react";
+import { MapPin, Compass, Calendar } from "lucide-react";
 import ProfileDropdown from "@/components/ProfileDropdown";
 
 export default function Home() {
@@ -12,27 +10,28 @@ export default function Home() {
   const [feedbackMsg, setFeedbackMsg] = useState("");
   const [feedbackStatus, setFeedbackStatus] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
-  const [isLightMode, setIsLightMode] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    if (document.documentElement.classList.contains('light-mode')) {
-      setIsLightMode(true);
-    }
+    
+    const handleScroll = () => {
+        const header = document.getElementById('mainNav');
+        if (header) {
+           if (window.scrollY > 50) {
+               header.classList.add('shadow-2xl');
+               header.style.backgroundColor = 'rgba(12, 19, 36, 0.85)';
+           } else {
+               header.classList.remove('shadow-2xl');
+               header.style.backgroundColor = 'rgba(12, 19, 36, 0.6)';
+           }
+        }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleTheme = () => {
-    if (isLightMode) {
-      document.documentElement.classList.remove('light-mode');
-      setIsLightMode(false);
-    } else {
-      document.documentElement.classList.add('light-mode');
-      setIsLightMode(true);
-    }
-  };
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,140 +56,193 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen relative flex flex-col font-sans text-slate-100 overflow-x-hidden bg-slate-950 selection:bg-amber-200 selection:text-amber-900">
+    <div className="min-h-screen relative flex flex-col font-sans bg-[#020617] text-[#dce1fb] overflow-x-hidden selection:bg-[#ffc174]/30">
       
-      {/* Background Image - Chandrashila */}
-      <div className="fixed inset-0 z-0 bg-slate-950">
-        <img 
-          src="https://www.shutterstock.com/image-photo/different-views-chandratal-lake-4250mtr-himachal-260nw-2053943075.jpg" 
-          alt="Chandratal Lake Background" 
-          className="w-full h-full object-cover opacity-80"
-        />
-        {/* Soft shadow overlay for legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/40 to-slate-950/90"></div>
-      </div>
-
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-slate-950/50 border-b border-white/10 shadow-2xl">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <Image src="/logo-v2.png" alt="NaviBharat Logo" width={38} height={38} className="rounded-xl shadow-md group-hover:scale-105 transition-transform" />
-            <span className="font-extrabold tracking-tight text-2xl text-amber-500 drop-shadow-md">NaviBharat</span>
+      {/* Top Navigation Bar */}
+      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-10 h-20 bg-[#0c1324]/60 backdrop-blur-xl border-b border-white/10 shadow-md transition-all duration-300" id="mainNav">
+        <div className="flex items-center gap-4">
+          <Link href="/" className="font-bold text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
+             <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-xl shadow-md" />
+             NaviBharat
           </Link>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-slate-300 hover:text-amber-400 hover:bg-slate-900/50 rounded-xl transition-all">
-               {isLightMode ? <Moon size={20} /> : <Sun size={20} />}
-            </Button>
-            {user ? (
-              <ProfileDropdown user={user} />
-            ) : (
-              <>
-                <Link href="/login">
-                  <Button variant="ghost" className="font-bold text-slate-300 hover:text-amber-400 hover:bg-slate-900/50 rounded-xl transition-all">Log in</Button>
-                </Link>
-                <Link href="/signup">
-                  <Button className="font-bold bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 shadow-xl shadow-amber-900/20 px-6 rounded-xl border-0 transition-all hover:scale-105 active:scale-95">
-                    Sign up
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
         </div>
-      </header>
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/plan" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Explore</Link>
+          <Link href="/dashboard" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Itineraries</Link>
+        </div>
+        <div className="flex items-center gap-6">
+          {user ? (
+             <ProfileDropdown user={user} />
+          ) : (
+            <>
+              <Link href="/login" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#ffc174] transition-colors">Log in</Link>
+              <Link href="/signup">
+                <button className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] px-6 py-2.5 rounded-xl text-white font-semibold text-sm scale-105 transition-transform hover:opacity-90">
+                  Sign up
+                </button>
+              </Link>
+            </>
+          )}
+        </div>
+      </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center pt-8 md:pt-16 pb-12 min-h-[80vh] px-4">
-        
-        {/* Clean Logo UI instead of oversized frame */}
-        <div className="mb-8 animate-in zoom-in slide-in-from-bottom-8 duration-1000">
-           <div className="bg-slate-950/80 backdrop-blur-xl p-4 rounded-3xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.8)] flex items-center justify-center transform hover:scale-105 transition-transform duration-500">
-             <Image src="/logo-v2.png" alt="NaviBharat Logo" width={80} height={80} className="rounded-2xl drop-shadow-xl" priority />
-           </div>
+      <section className="relative min-h-screen flex items-center justify-center pt-20 px-4 md:px-0">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img alt="Himalayas Landscape" className="w-full h-full object-cover opacity-60" src="/3d_india_home.png" />
+          <div className="absolute inset-0 z-10" style={{ background: 'radial-gradient(circle at center, transparent 0%, #020617 85%), linear-gradient(to bottom, transparent 60%, #020617 100%)' }}></div>
         </div>
-
-        {/* Catchy Font Title matching Signup Theme */}
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-amber-500 tracking-widest mb-6 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col items-center text-center leading-tight">
-           <span className="text-4xl md:text-6xl mb-2 text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] font-sans">भारत दर्शन</span>
-           NaviBharat
-        </h1>
         
-        <h4 className="text-lg md:text-2xl text-slate-100 font-serif italic max-w-3xl text-center mx-auto mb-10 font-bold tracking-wide bg-slate-950/80 px-8 py-4 rounded-full backdrop-blur-3xl shadow-2xl border border-white/20 leading-relaxed">
-          Discover the soul of India & the world. <br className="hidden md:block"/> Highly personalized, AI-curated journeys.
-        </h4>
-        
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-4">
-          <Link href="/plan">
-            <Button size="lg" className="h-16 px-10 text-xl font-bold bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 shadow-[0_0_30px_rgba(245,158,11,0.3)] rounded-2xl w-full sm:w-auto transition-all hover:scale-105 active:scale-95 border-0 flex items-center gap-3">
-              <Compass className="h-6 w-6" />
-              Plan your trip
-            </Button>
-          </Link>
-        </div>
-      </main>
-
-      {/* Features Preview */}
-      <section className="relative z-10 py-24 bg-slate-950/95 border-t border-white/10 backdrop-blur-2xl">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white tracking-tight">How NaviBharat Works</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Feature 1 */}
-            <div className="bg-slate-900/60 p-10 rounded-3xl border border-white/10 shadow-2xl text-center hover:bg-slate-900/80 transition-all hover:-translate-y-2 group">
-              <div className="mx-auto bg-amber-500/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 text-amber-500 border border-amber-500/20 group-hover:scale-110 transition-transform shadow-inner">
-                <MapPin size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white tracking-wide">1. Set Requirements</h3>
-              <p className="text-slate-400 font-medium text-lg leading-relaxed">Enter your destination, dates, budget, and deepest travel preferences.</p>
-            </div>
-            {/* Feature 2 */}
-            <div className="bg-slate-900/60 p-10 rounded-3xl border border-white/10 shadow-2xl text-center hover:bg-slate-900/80 transition-all hover:-translate-y-2 group mt-0 md:mt-8">
-              <div className="mx-auto bg-amber-500/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 text-amber-500 border border-amber-500/20 group-hover:scale-110 transition-transform shadow-inner">
-                <Compass size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white tracking-wide">2. AI Generation</h3>
-              <p className="text-slate-400 font-medium text-lg leading-relaxed">Our engine crafts the perfect day-by-day itinerary including hidden gems.</p>
-            </div>
-            {/* Feature 3 */}
-            <div className="bg-slate-900/60 p-10 rounded-3xl border border-white/10 shadow-2xl text-center hover:bg-slate-900/80 transition-all hover:-translate-y-2 group mt-0 md:mt-16">
-              <div className="mx-auto bg-amber-500/10 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 text-amber-500 border border-amber-500/20 group-hover:scale-110 transition-transform shadow-inner">
-                <Calendar size={40} />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-white tracking-wide">3. Review & Travel</h3>
-              <p className="text-slate-400 font-medium text-lg leading-relaxed">Review costs, print your PDF, and get ready for an unforgettable trip.</p>
-            </div>
+        <div className="relative z-20 text-center max-w-4xl mx-auto px-4">
+          {/* Floating Icon */}
+          <div className="inline-flex items-center justify-center p-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-bounce shadow-xl">
+             <Compass className="text-[#f59e0b] w-8 h-8" />
+          </div>
+          <h1 className="text-5xl md:text-7xl lg:text-[80px] font-extrabold text-[#dce1fb] mb-6 leading-tight tracking-tight">
+            NaviBharat
+          </h1>
+          <p className="text-lg md:text-xl text-[#d8c3ad] mb-12 max-w-2xl mx-auto opacity-90 leading-relaxed font-medium">
+            Discover the soul of India &amp; the world. Highly personalized, <span className="text-[#4fdbc8] font-bold">AI-curated journeys</span> designed for the modern explorer.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/plan">
+               <button className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] px-10 py-5 rounded-2xl text-white font-bold text-lg transition-all hover:scale-105 active:scale-95 group flex items-center">
+                 Plan your trip
+                 <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+               </button>
+            </Link>
           </div>
         </div>
       </section>
-      
+
+      {/* How It Works Section */}
+      <section className="py-24 px-4 md:px-10 bg-[#020617] relative overflow-hidden">
+        <div className="max-w-[1280px] mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#dce1fb] mb-4">How NaviBharat Works</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#f59e0b] to-[#d97706] mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 */}
+            <div className="backdrop-blur-xl bg-[#0f172a]/60 border border-white/10 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-[#f59e0b]/20 border border-[#f59e0b]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all">
+                <MapPin className="text-[#f59e0b] w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-[#dce1fb] mb-4">Set Requirements</h3>
+              <p className="text-[#d8c3ad] font-medium opacity-80 leading-relaxed">
+                Tell us your destination, budget, and travel style. Whether it's a spiritual retreat in Rishikesh or a luxe escape in Dubai.
+              </p>
+            </div>
+            
+            {/* Card 2 */}
+            <div className="backdrop-blur-xl bg-[#0f172a]/60 border border-white/10 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-[#4fdbc8]/20 border border-[#4fdbc8]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(79,219,200,0.3)] transition-all">
+                <svg className="text-[#4fdbc8] w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m7.8 16.2-2.9 2.9"/><path d="M2 12h4"/><path d="m7.8 7.8-2.9-2.9"/><path d="m9 12 3-3 3 3-3 3-3-3Z"/></svg>
+              </div>
+              <h3 className="text-xl font-bold text-[#dce1fb] mb-4">AI Generation</h3>
+              <p className="text-[#d8c3ad] font-medium opacity-80 leading-relaxed">
+                Our neural engine processes thousands of data points to craft a unique itinerary optimized for your preferences.
+              </p>
+            </div>
+            
+            {/* Card 3 */}
+            <div className="backdrop-blur-xl bg-[#0f172a]/60 border border-white/10 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-[#f59e0b]/20 border border-[#f59e0b]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all">
+                <Calendar className="text-[#f59e0b] w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-[#dce1fb] mb-4">Review &amp; Travel</h3>
+              <p className="text-[#d8c3ad] font-medium opacity-80 leading-relaxed">
+                Fine-tune the details, sync with your calendar, and embark on a seamless journey guided by AI-powered real-time updates.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Decorative Glows */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#f59e0b]/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#4fdbc8]/10 rounded-full blur-[120px] pointer-events-none"></div>
+      </section>
+
       {/* Feedback Section */}
-      <section className="relative z-10 py-16 bg-slate-900 border-t border-white/10">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-6 text-amber-500 tracking-tight">We value your feedback</h2>
-          <p className="text-slate-400 mb-8 max-w-xl mx-auto">Help us improve NaviBharat! Share your thoughts or feature requests with us.</p>
-          <form onSubmit={handleFeedbackSubmit} className="space-y-4 text-left bg-slate-950/50 p-6 md:p-8 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-md">
-            <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-bold text-slate-300 uppercase tracking-wide">Name</label>
-              <input id="name" type="text" placeholder="Your Name" value={feedbackName} onChange={(e) => setFeedbackName(e.target.value)} required className="w-full h-12 px-4 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium" />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="feedback" className="text-sm font-bold text-slate-300 uppercase tracking-wide">Message</label>
-              <textarea id="feedback" placeholder="Tell us how we can do better..." rows={4} value={feedbackMsg} onChange={(e) => setFeedbackMsg(e.target.value)} required className="w-full p-4 rounded-xl bg-slate-900 border border-white/10 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium resize-none"></textarea>
-            </div>
-            <Button type="submit" disabled={feedbackStatus === "Sending..."} className="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold h-12 rounded-xl text-lg mt-2 transition-transform active:scale-95">
-              {feedbackStatus === "Sending..." ? "Sending..." : "Send Feedback"}
-            </Button>
-            {feedbackStatus && feedbackStatus !== "Sending..." && (
-              <p className={`text-center text-sm font-bold mt-2 ${feedbackStatus.includes("success") ? "text-teal-400" : "text-red-400"}`}>{feedbackStatus}</p>
-            )}
-          </form>
+      <section className="py-24 px-4 md:px-10 bg-[#070d1f] border-t border-white/5">
+        <div className="max-w-2xl mx-auto text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#dce1fb] mb-12">We value your feedback</h2>
+          <div className="backdrop-blur-xl bg-[#0f172a]/60 border border-white/10 p-8 md:p-12 rounded-[2rem] text-left shadow-2xl">
+            <form onSubmit={handleFeedbackSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="font-semibold text-sm text-[#d8c3ad] ml-1">Name</label>
+                <input 
+                  type="text" 
+                  value={feedbackName} 
+                  onChange={(e) => setFeedbackName(e.target.value)} 
+                  required 
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-3 text-[#dce1fb] focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" 
+                  placeholder="Your name" 
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="font-semibold text-sm text-[#d8c3ad] ml-1">Message</label>
+                <textarea 
+                  value={feedbackMsg} 
+                  onChange={(e) => setFeedbackMsg(e.target.value)} 
+                  required 
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-3 text-[#dce1fb] focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none resize-none" 
+                  placeholder="How can we make your journeys better?" 
+                  rows={4}
+                ></textarea>
+              </div>
+              <button 
+                type="submit" 
+                disabled={feedbackStatus === "Sending..."} 
+                className="w-full bg-gradient-to-r from-[#f59e0b] to-[#d97706] px-8 py-4 rounded-xl text-white font-bold text-lg hover:shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50 disabled:scale-100 disabled:cursor-not-allowed"
+              >
+                {feedbackStatus === "Sending..." ? "Sending..." : "Send Feedback"}
+              </button>
+              {feedbackStatus && feedbackStatus !== "Sending..." && (
+                <p className={`text-center text-sm font-bold mt-4 ${feedbackStatus.includes("success") ? "text-[#4fdbc8]" : "text-[#ffb4ab]"}`}>
+                   {feedbackStatus}
+                </p>
+              )}
+            </form>
+          </div>
         </div>
       </section>
 
-      <footer className="relative z-10 bg-slate-950 py-12 border-t border-white/5">
-        <div className="container mx-auto px-4 text-center text-slate-500 font-medium tracking-wide">
-          &copy; {new Date().getFullYear()} NaviBharat by SmartTrip AI. All rights reserved.
+      {/* Footer */}
+      <footer className="w-full py-12 px-6 md:px-10 bg-[#070d1f] border-t border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:justify-between items-start gap-6">
+          <div className="flex flex-col gap-4">
+            <span className="font-bold text-2xl text-[#f59e0b]">NaviBharat</span>
+            <p className="text-sm font-medium text-[#d8c3ad] opacity-60 max-w-xs leading-relaxed">
+              Redefining global exploration through artificial intelligence and local heritage.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Company</h4>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">AI Roadmap</a>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Support</a>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Travel</h4>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Travel Guides</a>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Destinations</a>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Legal</h4>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Privacy Policy</a>
+              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm font-medium text-[#d8c3ad] opacity-60">© {new Date().getFullYear()} NaviBharat AI. Explorers Welcome.</p>
         </div>
       </footer>
+
+
     </div>
   );
 }
