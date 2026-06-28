@@ -12,6 +12,7 @@ const preferencesOptions = ["Adventure", "Cultural", "Food", "Nature", "Wellness
 export default function PlanTripPage() {
   const router = useRouter();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
   
   // Form State
   const [source, setSource] = useState("");
@@ -30,6 +31,22 @@ export default function PlanTripPage() {
   const [sourceCoords, setSourceCoords] = useState<[number, number] | null>(null);
   const [destCoords, setDestCoords] = useState<[number, number] | null>(null);
   const [destInfo, setDestInfo] = useState<{ extract?: string, image?: string } | null>(null);
+
+  useEffect(() => {
+    if (document.documentElement.classList.contains('light-mode')) {
+      setIsLightMode(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isLightMode) {
+      document.documentElement.classList.remove('light-mode');
+      setIsLightMode(false);
+    } else {
+      document.documentElement.classList.add('light-mode');
+      setIsLightMode(true);
+    }
+  };
 
   const togglePreference = (pref: string) => {
     if (preferences.includes(pref)) {
@@ -204,7 +221,15 @@ export default function PlanTripPage() {
             <Link href="/profile" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Profile</Link>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
+          <button onClick={toggleTheme} className="text-[#d8c3ad] hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110">
+            {isLightMode ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            )}
+          </button>
+          
           <Link href="/dashboard" className="text-[#d8c3ad] hover:text-[#ffb4ab] transition-colors px-4 py-2 font-semibold text-sm">Cancel</Link>
           <Link href="/profile">
              <svg className="w-6 h-6 text-[#ffc174] cursor-pointer hover:scale-105 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
