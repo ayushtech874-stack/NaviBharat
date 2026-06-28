@@ -219,22 +219,23 @@ export default function Home() {
               Redefining global exploration through artificial intelligence and local heritage.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
-            <div className="flex flex-col gap-3">
-              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Company</h4>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">AI Roadmap</a>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Support</a>
-            </div>
-            <div className="flex flex-col gap-3">
-              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Travel</h4>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Travel Guides</a>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Destinations</a>
-            </div>
-            <div className="flex flex-col gap-3">
-              <h4 className="font-semibold text-sm text-[#ffc174] mb-2">Legal</h4>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Privacy Policy</a>
-              <a className="text-[#d8c3ad] text-sm font-medium hover:text-[#ffc174] transition-all" href="#">Terms of Service</a>
-            </div>
+          <div className="flex justify-start md:justify-end w-full">
+            <details className="group cursor-pointer relative">
+              <summary className="list-none font-semibold text-sm text-[#ffc174] hover:text-[#f59e0b] transition-colors focus:outline-none flex items-center gap-2 select-none">
+                About Creator
+                <svg className="w-4 h-4 transition-transform group-open:rotate-180" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div className="absolute bottom-full mb-2 right-0 p-5 bg-[#0c1324]/90 backdrop-blur-xl border border-[#ffc174]/20 rounded-xl shadow-2xl text-left min-w-[240px] opacity-0 translate-y-2 group-open:opacity-100 group-open:translate-y-0 transition-all duration-300">
+                <p className="text-[#d8c3ad] text-sm font-medium">Designed & Developed by</p>
+                <p className="text-[#f59e0b] text-xl font-bold mt-1 tracking-wide">AYUSH</p>
+                <div className="h-px w-full bg-white/10 my-3"></div>
+                <ul className="space-y-2 text-xs text-[#d8c3ad]/80">
+                  <li className="flex items-center gap-2"><svg className="w-3 h-3 text-[#4fdbc8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Full-Stack Engineering</li>
+                  <li className="flex items-center gap-2"><svg className="w-3 h-3 text-[#4fdbc8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> UI/UX Design</li>
+                  <li className="flex items-center gap-2"><svg className="w-3 h-3 text-[#4fdbc8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> AI Integration</li>
+                </ul>
+              </div>
+            </details>
           </div>
         </div>
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
