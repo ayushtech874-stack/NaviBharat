@@ -96,8 +96,8 @@ export default function Home() {
         
         <div className="relative z-20 text-center max-w-4xl mx-auto px-4">
           {/* Floating Icon */}
-          <div className="inline-flex items-center justify-center p-4 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-bounce shadow-xl">
-             <Compass className="text-[#f59e0b] w-8 h-8" />
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-bounce shadow-[0_10px_25px_-5px_rgba(245,158,11,0.2)]">
+             <img src="/logo-v2.png" className="w-14 h-14 rounded-xl object-contain drop-shadow-lg" alt="NaviBharat Logo" />
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-[80px] font-extrabold text-[#dce1fb] mb-6 leading-tight tracking-tight">
             NaviBharat

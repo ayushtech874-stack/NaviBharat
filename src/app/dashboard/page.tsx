@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ActionModal, { ModalType } from "@/components/ActionModal";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import DestinationImage from "@/components/DestinationImage";
 
 // Define Trip interface based on backend Prisma schema
 interface Trip {
@@ -233,16 +234,13 @@ export default function DashboardPage() {
             ) : (
               trips.filter(t => t.destination.toLowerCase().includes(searchTerm.toLowerCase())).map((trip) => (
                 <div key={trip.id} className="group relative backdrop-blur-xl bg-[#0f172a]/40 border border-white/10 rounded-2xl p-1 hover:border-[#ffc174]/40 hover:bg-[#0f172a]/60 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#ffc174]/10 transition-all duration-500 overflow-hidden">
-                  <div className="h-48 relative overflow-hidden bg-gradient-to-br from-[#0c1324] to-[#191f31]">
-                    <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cartographer.png')] group-hover:scale-110 transition-transform duration-700"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent z-10"></div>
+                  <div className="h-48 relative overflow-hidden bg-[#0c1324] rounded-t-2xl">
+                    <DestinationImage destination={trip.destination} />
                     <div className="absolute top-4 right-4 z-20">
-                      <span className="bg-[#4fdbc8]/20 backdrop-blur-md text-[#4fdbc8] border border-[#4fdbc8]/30 px-3 py-1 rounded-full text-sm font-semibold tracking-wide">
+                      <span className="bg-[#4fdbc8]/90 backdrop-blur-md text-[#020617] shadow-lg px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
                         {trip.travelStyle}
                       </span>
                     </div>
-                    {/* Compass Watermark */}
-                    <svg className="absolute -right-8 -bottom-8 w-48 h-48 text-[#f59e0b]/5 group-hover:scale-110 transition-transform duration-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
                   </div>
                   
                   <div className="p-6 relative z-20">
