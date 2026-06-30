@@ -1,13 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
   const router = useRouter();
+  
+  useEffect(() => {
+    if (document.documentElement.classList.contains('light-mode')) {
+      setIsLightMode(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isLightMode) {
+      document.documentElement.classList.remove('light-mode');
+      setIsLightMode(false);
+    } else {
+      document.documentElement.classList.add('light-mode');
+      setIsLightMode(true);
+    }
+  };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,10 +62,19 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#020617] text-[#dce1fb] flex items-center justify-center font-sans relative px-4 overflow-hidden">
+      {/* Theme Toggle Button */}
+      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-[#0f172a]/40 border border-white/10 backdrop-blur-md text-[#d8c3ad] hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
+        {isLightMode ? (
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        )}
+      </button>
+
       {/* 3D Background Image */}
       <div className="fixed inset-0 z-0">
-        <img src="/3d_logo_bg.png" alt="3D Logo Background" className="w-full h-full object-cover opacity-70" />
-        <div className="absolute inset-0 bg-[#020617]/40 backdrop-blur-[2px]"></div>
+        <img src="/3d_india_home.png" alt="Himalayas Dashboard Background" className="w-full h-full object-cover opacity-50 mix-blend-screen" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/40 via-[#0f172a]/60 to-[#020617] backdrop-blur-[2px]"></div>
       </div>
       
       <main className="w-full max-w-[480px] z-10 py-12">
