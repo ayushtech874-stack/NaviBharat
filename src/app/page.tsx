@@ -74,9 +74,9 @@ export default function Home() {
     <div className="min-h-screen relative flex flex-col font-sans bg-[#020617] text-[#dce1fb] overflow-x-hidden selection:bg-[#ffc174]/30">
       
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-10 h-20 bg-[#0c1324]/60 backdrop-blur-xl border-b border-white/10 shadow-md transition-all duration-300" id="mainNav">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="font-bold text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
+      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-[#0c1324]/60 backdrop-blur-xl border-b border-white/10 shadow-md transition-all duration-300" id="mainNav">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link href="/" className="font-bold text-xl sm:text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
              <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-xl shadow-md" />
              NaviBharat
           </Link>
@@ -85,7 +85,7 @@ export default function Home() {
           <Link href="/plan" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Explore</Link>
           <Link href="/dashboard" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Itineraries</Link>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 sm:gap-6">
           <button onClick={toggleTheme} className="text-[#d8c3ad] hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110">
             {isLightMode ? (
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -100,7 +100,7 @@ export default function Home() {
             <>
               <Link href="/login" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#ffc174] transition-colors">Log in</Link>
               <Link href="/signup">
-                <button className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] px-6 py-2.5 rounded-xl text-white font-semibold text-sm scale-105 transition-transform hover:opacity-90">
+                <button className="bg-gradient-to-br from-[#f59e0b] to-[#d97706] shadow-[0_10px_25px_-5px_rgba(245,158,11,0.4)] px-4 py-2 sm:px-6 sm:py-2.5 rounded-xl text-white font-semibold text-sm scale-105 transition-transform hover:opacity-90">
                   Sign up
                 </button>
               </Link>
@@ -122,7 +122,7 @@ export default function Home() {
           <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-bounce shadow-[0_10px_25px_-5px_rgba(245,158,11,0.2)]">
              <img src="/logo-v2.png" className="w-14 h-14 rounded-xl object-contain drop-shadow-lg" alt="NaviBharat Logo" />
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-[80px] font-extrabold text-[#dce1fb] mb-6 leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[80px] font-extrabold text-[#dce1fb] mb-6 leading-tight tracking-tight break-words">
             NaviBharat
           </h1>
           <p className="text-lg md:text-xl text-[#d8c3ad] mb-12 max-w-2xl mx-auto opacity-90 leading-relaxed font-medium">

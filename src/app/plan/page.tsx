@@ -209,11 +209,11 @@ export default function PlanTripPage() {
       </div>
 
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0c1324]/60 backdrop-blur-xl border-b border-white/10 shadow-md h-20 flex justify-between items-center px-6 md:px-10">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="font-bold text-3xl tracking-tight text-[#ffc174] flex items-center gap-2">
+      <nav className="fixed top-0 w-full z-50 bg-[#0c1324]/60 backdrop-blur-xl border-b border-white/10 shadow-md h-20 flex justify-between items-center px-4 sm:px-6 md:px-10">
+        <div className="flex items-center gap-2 sm:gap-8">
+          <Link href="/" className="font-bold text-xl sm:text-3xl tracking-tight text-[#ffc174] flex items-center gap-2">
              <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-lg shadow-sm" />
-             NaviBharat
+             <span className="hidden sm:inline">NaviBharat</span>
           </Link>
           <div className="hidden md:flex gap-6">
             <Link href="/dashboard" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Dashboard</Link>
@@ -221,7 +221,7 @@ export default function PlanTripPage() {
             <Link href="/profile" className="text-[#d8c3ad] font-semibold text-sm hover:text-[#4fdbc8] transition-colors duration-300">Profile</Link>
           </div>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <button onClick={toggleTheme} className="text-[#d8c3ad] hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110">
             {isLightMode ? (
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -237,10 +237,10 @@ export default function PlanTripPage() {
         </div>
       </nav>
 
-      <main className="relative z-10 pt-32 pb-24 px-6 md:px-10 max-w-[1280px] mx-auto">
+      <main className="relative z-10 pt-28 pb-24 px-4 sm:px-6 md:px-10 max-w-[1280px] mx-auto">
         {/* Hero Header */}
-        <header className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white max-w-3xl mx-auto leading-tight">Embark on an Epic Indian Odyssey</h1>
+        <header className="text-center mb-12 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white max-w-3xl mx-auto leading-tight">Embark on an Epic Indian Odyssey</h1>
           <button onClick={handleSurpriseMe} type="button" className="bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 mx-auto transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]">
             <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
             Inspire Me
