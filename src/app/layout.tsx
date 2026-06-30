@@ -21,6 +21,13 @@ const yatra = Yatra_One({
 export const metadata: Metadata = {
   title: "NaviBharat | AI Travel Itineraries",
   description: "Discover your next great adventure mapped by AI.",
+  applicationName: "NaviBharat",
+  openGraph: {
+    siteName: "NaviBharat",
+    title: "NaviBharat | AI Travel Itineraries",
+    description: "Discover your next great adventure mapped by AI.",
+    type: "website",
+  },
   verification: {
     google: "uWaKXvizX7DpjnXm4070Pe9NJ2DSn1xtF2Ofx36Xtp4",
   },
