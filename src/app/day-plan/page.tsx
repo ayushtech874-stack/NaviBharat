@@ -19,6 +19,12 @@ export default function DayPlanPage() {
   const [cityInfo, setCityInfo] = useState<{ extract?: string, image?: string } | null>(null);
   const [cityCoords, setCityCoords] = useState<[number, number] | null>(null);
 
+  const [presentCity, setPresentCity] = useState("");
+  const [presentCitySuggestions, setPresentCitySuggestions] = useState<any[]>([]);
+  const [showPresentCityDropdown, setShowPresentCityDropdown] = useState(false);
+  const [selectedPresentCity, setSelectedPresentCity] = useState(false);
+  const [specificArea, setSpecificArea] = useState("");
+
   const [date, setDate] = useState("");
   const [presentLocation, setPresentLocation] = useState("");
   const [presentCoords, setPresentCoords] = useState<[number, number] | null>(null);
@@ -78,6 +84,32 @@ export default function DayPlanPage() {
     return () => clearTimeout(timer);
   }, [city]);
 
+  // Debounced Present City Fetch
+  useEffect(() => {
+    if (selectedPresentCity) {
+      setSelectedPresentCity(false);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      if (presentCity.length > 2) {
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(presentCity)}&limit=5&countrycodes=in`);
+          const data = await res.json();
+          if (data && data.length > 0) {
+             setPresentCitySuggestions(data);
+             setShowPresentCityDropdown(true);
+          } else {
+             setPresentCitySuggestions([]);
+          }
+        } catch (e) {}
+      } else {
+         setPresentCitySuggestions([]);
+         setShowPresentCityDropdown(false);
+      }
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [presentCity]);
+
   // Debounced Present Location Fetch
   useEffect(() => {
     const timer = setTimeout(async () => {
@@ -121,7 +153,7 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation, vibes,
+          city, date, presentLocation: presentLocation + " in " + presentCity, specificArea, vibes,
           messages: newMessages,
           sessionId: chatSessionId
         })
@@ -150,7 +182,7 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation, vibes, chatHistory: chatMessages
+          city, date, presentLocation: presentLocation + " in " + presentCity, specificArea, vibes, chatHistory: chatMessages
         })
       });
       if (res.ok) {
@@ -206,15 +238,16 @@ export default function DayPlanPage() {
             </h1>
             
             <div className="space-y-5">
+              
               <div className="relative">
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Destination City</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present City</label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e]" />
-                  <input type="text" value={city} onChange={e => { setCity(e.target.value); setShowCityDropdown(true); }} placeholder="Where are you going?" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 pl-10 pr-4 text-slate-800 focus:border-[#0f766e] outline-none" />
-                  {showCityDropdown && citySuggestions.length > 0 && (
+                  <input type="text" value={presentCity} onChange={e => { setPresentCity(e.target.value); setShowPresentCityDropdown(true); }} placeholder="Which city are you currently in?" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 pl-10 pr-4 text-slate-800 focus:border-[#0f766e] outline-none" />
+                  {showPresentCityDropdown && presentCitySuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white border border-teal-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
-                      {citySuggestions.map((sug, i) => (
-                        <div key={i} className="px-4 py-3 hover:bg-teal-50 cursor-pointer text-sm text-slate-700 border-b border-teal-50 last:border-none" onClick={() => { setSelectedCity(true); setCity(sug.display_name); setShowCityDropdown(false); }}>
+                      {presentCitySuggestions.map((sug, i) => (
+                        <div key={i} className="px-4 py-3 hover:bg-teal-50 cursor-pointer text-sm text-slate-700 border-b border-teal-50 last:border-none" onClick={() => { setSelectedPresentCity(true); setPresentCity(sug.display_name); setShowPresentCityDropdown(false); }}>
                            {sug.display_name}
                         </div>
                       ))}
@@ -224,15 +257,37 @@ export default function DayPlanPage() {
               </div>
 
               <div className="relative">
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present Location (For Transit)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present Location</label>
                 <input type="text" value={presentLocation} onChange={e => setPresentLocation(e.target.value)} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 focus:border-[#0f766e] outline-none" />
+              </div>
+
+              <div className="relative mt-8 pt-6 border-t border-teal-100">
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Destination City</label>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f59e0b]" />
+                  <input type="text" value={city} onChange={e => { setCity(e.target.value); setShowCityDropdown(true); }} placeholder="Where do you want to travel?" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 pl-10 pr-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
+                  {showCityDropdown && citySuggestions.length > 0 && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-amber-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
+                      {citySuggestions.map((sug, i) => (
+                        <div key={i} className="px-4 py-3 hover:bg-amber-50 cursor-pointer text-sm text-slate-700 border-b border-amber-50 last:border-none" onClick={() => { setSelectedCity(true); setCity(sug.display_name); setShowCityDropdown(false); }}>
+                           {sug.display_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="relative">
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Specific Area (Optional)</label>
+                <input type="text" value={specificArea} onChange={e => setSpecificArea(e.target.value)} placeholder="e.g. Chandni Chowk, or 'Anywhere in city'" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 px-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
               </div>
 
               <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
                 <div className="relative">
-                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e]" />
-                   <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 pl-10 pr-4 text-slate-800 focus:border-[#0f766e] outline-none" />
+                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0f766e] pointer-events-none z-10" />
+                   <input type="date" value={date} onChange={e => setDate(e.target.value)} className="relative w-full bg-white border-2 border-teal-100 hover:border-teal-200 rounded-xl py-3 pl-10 pr-4 text-slate-800 font-bold focus:border-[#0f766e] focus:ring-4 focus:ring-teal-50 outline-none transition-all cursor-pointer shadow-sm [color-scheme:light] [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:w-full" />
                 </div>
               </div>
 
