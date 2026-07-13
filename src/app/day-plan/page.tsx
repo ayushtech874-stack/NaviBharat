@@ -44,10 +44,11 @@ export default function DayPlanPage() {
   const [chatSessionId, setChatSessionId] = useState<string | null>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
+  const [customVibe, setCustomVibe] = useState("");
   
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const isLeftPanelComplete = Boolean(presentCity && presentLocation && city && date && vibes.length > 0);
+  const isLeftPanelComplete = Boolean(presentCity && presentLocation && city && date);
 
   // Debounced City Fetch
   useEffect(() => {
@@ -191,6 +192,25 @@ export default function DayPlanPage() {
     else if (vibes.length < 3) setVibes([...vibes, v]);
   };
 
+  const handleGetCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        setPresentCoords([latitude, longitude]);
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
+          const data = await res.json();
+          if (data && data.display_name) {
+            setPresentLocation(data.display_name);
+            setPresentCity(data.address?.city || data.address?.state_district || data.address?.state || "Unknown");
+          }
+        } catch(e) {}
+      });
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentInput.trim() || !city) return;
@@ -309,7 +329,12 @@ export default function DayPlanPage() {
               </div>
 
               <div className="relative">
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present Location</label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-xs font-bold text-slate-500 uppercase">Present Location</label>
+                  <button type="button" onClick={handleGetCurrentLocation} className="text-xs font-bold text-[#0f766e] hover:text-teal-800 underline flex items-center gap-1">
+                    <Compass className="w-3 h-3" /> Auto-Locate
+                  </button>
+                </div>
                 <div className="relative">
                   <input type="text" value={presentLocation} onChange={e => { setPresentLocation(e.target.value); setShowPresentLocationDropdown(true); }} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 focus:border-[#0f766e] outline-none" />
                   {showPresentLocationDropdown && presentLocationSuggestions.length > 0 && (
@@ -378,13 +403,17 @@ export default function DayPlanPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">The Vibe (Max 3)</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">The Vibe (Max 3) - Optional</label>
                 <div className="flex flex-wrap gap-2">
                   {vibesList.map(v => (
                     <button key={v} onClick={() => toggleVibe(v)} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${vibes.includes(v) ? 'bg-[#f59e0b] text-white shadow-md' : 'bg-[#f0fdfa] text-slate-600 border border-teal-100 hover:border-[#0f766e]'}`}>
                       {v}
                     </button>
                   ))}
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <input type="text" value={customVibe} onChange={e => setCustomVibe(e.target.value)} placeholder="Or type a custom vibe..." className="flex-1 bg-[#f0fdfa] border border-teal-100 rounded-xl py-2 px-3 text-sm text-slate-800 focus:border-[#0f766e] outline-none" />
+                  <button type="button" onClick={() => { if(customVibe.trim() && vibes.length < 3 && !vibes.includes(customVibe)) { setVibes([...vibes, customVibe.trim()]); setCustomVibe(""); } }} className="px-4 py-2 bg-[#0f766e] text-white rounded-xl text-sm font-bold hover:bg-[#0d9488]">Add</button>
                 </div>
               </div>
 
@@ -436,8 +465,8 @@ export default function DayPlanPage() {
               <div className="flex justify-start">
                  <div className="bg-white border border-teal-100 text-slate-700 px-5 py-4 rounded-3xl rounded-tl-sm max-w-[85%] shadow-sm text-base leading-relaxed">
                    {isLeftPanelComplete 
-                     ? "Awesome! Your left panel is complete. I'm ready to help! What's your budget for the day? Any specific restaurant vibes or hours you prefer? Let me know!"
-                     : "Hi there! Please completely fill out the Day Plan details on the left (Present City, Present Location, Destination City, Date, and Vibes) to unlock our chat!"}
+                     ? "Awesome! Your basic details are set. Which specific area, monument, or activity are you most excited to explore first?"
+                     : "Hi there! Please fill out the Day Plan details on the left (Present City, Location, Destination, Date) to unlock our chat!"}
                  </div>
               </div>
               {chatMessages.map((msg, idx) => (
