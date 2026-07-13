@@ -61,9 +61,10 @@ export default function DayItineraryPage() {
             <div className="flex flex-wrap items-center gap-4 text-slate-600 font-medium mb-6">
               <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-[#0f766e]" /> {params.city}</span>
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-[#f59e0b]" /> {params.date}</span>
-              <span className="bg-teal-100 text-[#0f766e] px-3 py-1 rounded-full text-sm font-bold border border-teal-200">
-                 Est. Total Budget: {dayPlan.total_estimated_budget}
-              </span>
+              <div className="bg-teal-100 text-[#0f766e] px-3 py-2 rounded-xl text-sm font-bold border border-teal-200 flex flex-col">
+                 <span>Est. Budget: {dayPlan.estimated_budget || dayPlan.total_estimated_budget}</span>
+                 {dayPlan.budget_includes && <span className="text-xs font-medium opacity-80 mt-0.5">{dayPlan.budget_includes}</span>}
+              </div>
             </div>
             {params.vibes?.length > 0 && (
                <div className="flex gap-2">

@@ -34,12 +34,13 @@ CRITICAL RULES:
 5. Provide deep 'significance' (e.g. "Shot in movie X", "Built by Y in 14th century").
 6. Include 'estimated_transit_time' and 'transit_mode' (Auto, Metro, Walk, Cab) from the PREVIOUS place (or from Starting Location for the first place), simulating real-time traffic delays.
 7. Include 'opening_hours' and 'ticket_cost' (in ₹).
-8. Budget is NOT given by the user; instead, you must calculate the 'total_estimated_budget' based on ticket costs, food, and transit so the user can see it.
+8. Calculate an 'estimated_budget' strictly based ONLY on place tickets and average local transit fees. Do NOT include food or shopping. You must also include a 'budget_includes' string stating exactly what is included (e.g. "Includes entry tickets and approx local transport. Food/Shopping excluded.")
 
 Output strictly valid JSON matching this schema:
 {
   "day_title": "string",
-  "total_estimated_budget": "string (e.g. ₹2500)",
+  "estimated_budget": "string (e.g. ₹800)",
+  "budget_includes": "string (e.g. Includes entry tickets and approx local transport)",
   "places": [
     {
       "time": "string (e.g. 10:00 AM - 12:30 PM)",
