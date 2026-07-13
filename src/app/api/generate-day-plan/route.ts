@@ -27,7 +27,7 @@ ${discussionContext}
 
 Based on this, generate a highly structured JSON day itinerary.
 CRITICAL RULES:
-1. DO NOT hallucinate. Use only real places in ${city}.
+1. STRICT LOCATION BOUNDARY: You MUST ONLY generate places located physically inside or around the exact destination: ${city}. DO NOT hallucinate or generate itineraries for default cities like Bengaluru or Delhi unless the user explicitly chose them.
 2. HIDDEN GEMS FIRST: You must prioritize highly underrated gems, offbeat places, localized markets, and places hidden from social media trends. Strongly penalize generic "top 10 tourist traps" unless specifically requested in the context.
 3. Rate each place on a scale of 1 to 10 for popularity (e.g. 8.5).
 4. Assign one tag to each place: "Must Visit", "Underrated", or "Can be skipped". AT LEAST 60% OF PLACES MUST BE TAGGED "Underrated".
