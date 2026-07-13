@@ -24,9 +24,15 @@ export default function DayPlanPage() {
   const [showPresentCityDropdown, setShowPresentCityDropdown] = useState(false);
   const [selectedPresentCity, setSelectedPresentCity] = useState(false);
   const [specificArea, setSpecificArea] = useState("");
+  const [specificAreaSuggestions, setSpecificAreaSuggestions] = useState<any[]>([]);
+  const [showSpecificAreaDropdown, setShowSpecificAreaDropdown] = useState(false);
+  const [selectedSpecificArea, setSelectedSpecificArea] = useState(false);
 
   const [date, setDate] = useState("");
   const [presentLocation, setPresentLocation] = useState("");
+  const [presentLocationSuggestions, setPresentLocationSuggestions] = useState<any[]>([]);
+  const [showPresentLocationDropdown, setShowPresentLocationDropdown] = useState(false);
+  const [selectedPresentLocation, setSelectedPresentLocation] = useState(false);
   const [presentCoords, setPresentCoords] = useState<[number, number] | null>(null);
   const [vibes, setVibes] = useState<string[]>([]);
   
@@ -112,23 +118,60 @@ export default function DayPlanPage() {
 
   // Debounced Present Location Fetch
   useEffect(() => {
+    if (selectedPresentLocation) {
+      setSelectedPresentLocation(false);
+      return;
+    }
     const timer = setTimeout(async () => {
       if (presentLocation.length > 2) {
         try {
-          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(presentLocation)}&limit=1&countrycodes=in`);
+          const query = presentCity ? `${presentLocation} ${presentCity}` : presentLocation;
+          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=in`);
           const data = await res.json();
-          if (data && data[0]) {
+          if (data && data.length > 0) {
+             setPresentLocationSuggestions(data);
+             setShowPresentLocationDropdown(true);
              setPresentCoords([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
           } else {
+             setPresentLocationSuggestions([]);
              setPresentCoords(null);
           }
         } catch (e) { setPresentCoords(null); }
       } else {
+         setPresentLocationSuggestions([]);
+         setShowPresentLocationDropdown(false);
          setPresentCoords(null);
       }
     }, 1000);
     return () => clearTimeout(timer);
-  }, [presentLocation]);
+  }, [presentLocation, presentCity]);
+
+  // Debounced Specific Area Fetch
+  useEffect(() => {
+    if (selectedSpecificArea) {
+      setSelectedSpecificArea(false);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      if (specificArea.length > 2 && specificArea.toLowerCase() !== 'anywhere in city') {
+        try {
+          const query = city ? `${specificArea} ${city}` : specificArea;
+          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=in`);
+          const data = await res.json();
+          if (data && data.length > 0) {
+             setSpecificAreaSuggestions(data);
+             setShowSpecificAreaDropdown(true);
+          } else {
+             setSpecificAreaSuggestions([]);
+          }
+        } catch (e) { }
+      } else {
+         setSpecificAreaSuggestions([]);
+         setShowSpecificAreaDropdown(false);
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [specificArea, city]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -258,11 +301,27 @@ export default function DayPlanPage() {
 
               <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present Location</label>
-                <input type="text" value={presentLocation} onChange={e => setPresentLocation(e.target.value)} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 focus:border-[#0f766e] outline-none" />
+                <div className="relative">
+                  <input type="text" value={presentLocation} onChange={e => { setPresentLocation(e.target.value); setShowPresentLocationDropdown(true); }} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 focus:border-[#0f766e] outline-none" />
+                  {showPresentLocationDropdown && presentLocationSuggestions.length > 0 && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-teal-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
+                      {presentLocationSuggestions.map((sug, i) => (
+                        <div key={i} className="px-4 py-3 hover:bg-teal-50 cursor-pointer text-sm text-slate-700 border-b border-teal-50 last:border-none" onClick={() => { setSelectedPresentLocation(true); setPresentLocation(sug.display_name); setShowPresentLocationDropdown(false); }}>
+                           {sug.display_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="relative mt-8 pt-6 border-t border-teal-100">
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Destination City</label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-xs font-bold text-slate-500 uppercase">Destination City</label>
+                  {presentCity && (
+                    <button type="button" onClick={() => {setCity(presentCity); setSelectedCity(true);}} className="text-xs font-bold text-[#0f766e] hover:text-teal-800 underline">Same as present city</button>
+                  )}
+                </div>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f59e0b]" />
                   <input type="text" value={city} onChange={e => { setCity(e.target.value); setShowCityDropdown(true); }} placeholder="Where do you want to travel?" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 pl-10 pr-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
@@ -280,15 +339,23 @@ export default function DayPlanPage() {
 
               <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Specific Area (Optional)</label>
-                <input type="text" value={specificArea} onChange={e => setSpecificArea(e.target.value)} placeholder="e.g. Chandni Chowk, or 'Anywhere in city'" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 px-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
+                <div className="relative">
+                  <input type="text" value={specificArea} onChange={e => { setSpecificArea(e.target.value); setShowSpecificAreaDropdown(true); }} placeholder="e.g. Chandni Chowk, or 'Anywhere in city'" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 px-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
+                  {showSpecificAreaDropdown && specificAreaSuggestions.length > 0 && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-amber-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
+                      {specificAreaSuggestions.map((sug, i) => (
+                        <div key={i} className="px-4 py-3 hover:bg-amber-50 cursor-pointer text-sm text-slate-700 border-b border-amber-50 last:border-none" onClick={() => { setSelectedSpecificArea(true); setSpecificArea(sug.display_name); setShowSpecificAreaDropdown(false); }}>
+                           {sug.display_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
-                <div className="relative">
-                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#0f766e] pointer-events-none z-10" />
-                   <input type="date" value={date} onChange={e => setDate(e.target.value)} className="relative w-full bg-white border-2 border-teal-100 hover:border-teal-200 rounded-xl py-3 pl-10 pr-4 text-slate-800 font-bold focus:border-[#0f766e] focus:ring-4 focus:ring-teal-50 outline-none transition-all cursor-pointer shadow-sm [color-scheme:light] [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:w-full" />
-                </div>
+                <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 font-medium focus:border-[#0f766e] outline-none" />
               </div>
 
               <div>
