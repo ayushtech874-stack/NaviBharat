@@ -25,10 +25,6 @@ export default function DayPlanPage() {
   const [presentCitySuggestions, setPresentCitySuggestions] = useState<any[]>([]);
   const [showPresentCityDropdown, setShowPresentCityDropdown] = useState(false);
   const [selectedPresentCity, setSelectedPresentCity] = useState(false);
-  const [specificArea, setSpecificArea] = useState("");
-  const [specificAreaSuggestions, setSpecificAreaSuggestions] = useState<any[]>([]);
-  const [showSpecificAreaDropdown, setShowSpecificAreaDropdown] = useState(false);
-  const [selectedSpecificArea, setSelectedSpecificArea] = useState(false);
 
   const [date, setDate] = useState("");
   const [presentLocation, setPresentLocation] = useState("");
@@ -151,33 +147,6 @@ export default function DayPlanPage() {
     return () => clearTimeout(timer);
   }, [presentLocation, presentCity]);
 
-  // Debounced Specific Area Fetch
-  useEffect(() => {
-    if (selectedSpecificArea) {
-      setSelectedSpecificArea(false);
-      return;
-    }
-    const timer = setTimeout(async () => {
-      if (specificArea.length > 2 && specificArea.toLowerCase() !== 'anywhere in city') {
-        try {
-          const query = city ? `${specificArea} ${city}` : specificArea;
-          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=in`);
-          const data = await res.json();
-          if (data && data.length > 0) {
-             setSpecificAreaSuggestions(data);
-             setShowSpecificAreaDropdown(true);
-          } else {
-             setSpecificAreaSuggestions([]);
-          }
-        } catch (e) { }
-      } else {
-         setSpecificAreaSuggestions([]);
-         setShowSpecificAreaDropdown(false);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [specificArea, city]);
-
   useEffect(() => {
     if (chatEndRef.current && chatEndRef.current.parentElement) {
       chatEndRef.current.parentElement.scrollTo({
@@ -225,7 +194,7 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation: presentLocation + " in " + presentCity, specificArea, vibes,
+          city, date, presentLocation: presentLocation + " in " + presentCity, vibes,
           messages: newMessages,
           sessionId: chatSessionId
         })
@@ -254,7 +223,7 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation: presentLocation + " in " + presentCity, specificArea, vibes, chatHistory: chatMessages
+          city, date, presentLocation: presentLocation + " in " + presentCity, vibes, chatHistory: chatMessages
         })
       });
       if (res.ok) {
@@ -304,6 +273,18 @@ export default function DayPlanPage() {
         
         {/* Left Column: Form & Inputs */}
         <div className="lg:col-span-5 space-y-6">
+
+          {/* Map Widget moved to Top */}
+          <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-teal-50 h-64 relative">
+             <div className="absolute inset-0 z-0">
+                <MapWidget sourceCoords={presentCoords} destCoords={cityCoords} />
+             </div>
+             <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
+                {presentCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#f59e0b] shadow-sm border border-[#f59e0b]/20">Present: {presentLocation}</span>}
+                {cityCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#0f766e] shadow-sm border border-[#0f766e]/20">Target: {city.split(',')[0]}</span>}
+             </div>
+          </div>
+
           <div className="bg-white rounded-3xl p-6 shadow-xl border border-teal-50">
             <h1 className="text-2xl font-extrabold text-slate-800 mb-6 flex items-center gap-2">
               <Compass className="text-[#f59e0b]" /> Plan Your Day
@@ -372,22 +353,6 @@ export default function DayPlanPage() {
               </div>
 
               <div className="relative">
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Specific Area (Optional)</label>
-                <div className="relative">
-                  <input type="text" value={specificArea} onChange={e => { setSpecificArea(e.target.value); setShowSpecificAreaDropdown(true); }} placeholder="e.g. Chandni Chowk, or 'Anywhere in city'" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 px-4 text-slate-800 focus:border-[#f59e0b] outline-none" />
-                  {showSpecificAreaDropdown && specificAreaSuggestions.length > 0 && (
-                    <div className="absolute z-50 w-full mt-1 bg-white border border-amber-100 rounded-xl shadow-2xl max-h-60 overflow-y-auto">
-                      {specificAreaSuggestions.map((sug, i) => (
-                        <div key={i} className="px-4 py-3 hover:bg-amber-50 cursor-pointer text-sm text-slate-700 border-b border-amber-50 last:border-none" onClick={() => { setSelectedSpecificArea(true); setSpecificArea(sug.display_name); setShowSpecificAreaDropdown(false); }}>
-                           {sug.display_name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e] z-10 pointer-events-none" />
@@ -433,17 +398,6 @@ export default function DayPlanPage() {
               <p className="text-xs text-slate-500 line-clamp-3">{cityInfo.extract}</p>
             </div>
           )}
-
-          {/* Map Widget */}
-          <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-teal-50 h-64 relative">
-             <div className="absolute inset-0 z-0">
-                <MapWidget sourceCoords={presentCoords} destCoords={cityCoords} />
-             </div>
-             <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
-                {presentCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#f59e0b] shadow-sm border border-[#f59e0b]/20">Present: {presentLocation}</span>}
-                {cityCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#0f766e] shadow-sm border border-[#0f766e]/20">Target: {city.split(',')[0]}</span>}
-             </div>
-          </div>
 
         </div>
 
