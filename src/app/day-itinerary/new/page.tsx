@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Download, MapPin, Clock, Tag, Star, Info, Car, Train, Footprints } from "lucide-react";
+import { ArrowLeft, Download, MapPin, Clock, Tag, Star, Info, Car, Train, Footprints, Calendar } from "lucide-react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
