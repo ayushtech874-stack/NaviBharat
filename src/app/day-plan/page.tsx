@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Compass, Loader2, Send, MapPin, Calendar, Camera } from "lucide-react";
 import MapWidget from "@/components/MapWidget";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const vibesList = ["Historical", "Food", "Nature", "Shopping", "Spiritual", "Art & Culture", "Photography", "Relaxation"];
 
@@ -176,8 +178,13 @@ export default function DayPlanPage() {
   }, [specificArea, city]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chatMessages]);
+    if (chatEndRef.current && chatEndRef.current.parentElement) {
+      chatEndRef.current.parentElement.scrollTo({
+        top: chatEndRef.current.parentElement.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [chatMessages, isTyping]);
 
   const toggleVibe = (v: string) => {
     if (vibes.includes(v)) setVibes(vibes.filter(x => x !== v));
@@ -357,7 +364,17 @@ export default function DayPlanPage() {
 
               <div className="relative">
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
-                <input type="date" value={date} onChange={e => setDate(e.target.value)} className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 px-4 text-slate-800 font-medium focus:border-[#0f766e] outline-none" />
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e] z-10 pointer-events-none" />
+                  <DatePicker
+                    selected={date ? new Date(date) : null}
+                    onChange={(d: Date | null) => setDate(d ? d.toISOString().split('T')[0] : "")}
+                    placeholderText="Select a date"
+                    className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 pl-10 pr-4 text-slate-800 font-medium focus:border-[#0f766e] outline-none"
+                    dateFormat="MMMM d, yyyy"
+                    minDate={new Date()}
+                  />
+                </div>
               </div>
 
               <div>
@@ -417,7 +434,7 @@ export default function DayPlanPage() {
             {/* Chat Messages */}
             <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] space-y-4">
               <div className="flex justify-start">
-                 <div className="bg-white border border-teal-100 text-slate-700 px-4 py-3 rounded-2xl rounded-tl-sm max-w-[80%] shadow-sm text-sm">
+                 <div className="bg-white border border-teal-100 text-slate-700 px-5 py-4 rounded-3xl rounded-tl-sm max-w-[85%] shadow-sm text-base leading-relaxed">
                    {isLeftPanelComplete 
                      ? "Awesome! Your left panel is complete. I'm ready to help! What's your budget for the day? Any specific restaurant vibes or hours you prefer? Let me know!"
                      : "Hi there! Please completely fill out the Day Plan details on the left (Present City, Present Location, Destination City, Date, and Vibes) to unlock our chat!"}
@@ -425,7 +442,7 @@ export default function DayPlanPage() {
               </div>
               {chatMessages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`px-4 py-3 rounded-2xl max-w-[80%] shadow-sm text-sm whitespace-pre-wrap ${msg.role === 'user' ? 'bg-[#0f766e] text-white rounded-tr-sm' : 'bg-white border border-teal-100 text-slate-700 rounded-tl-sm'}`}>
+                  <div className={`px-5 py-4 rounded-3xl max-w-[85%] shadow-sm text-base leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-[#0f766e] text-white rounded-tr-sm' : 'bg-white border border-teal-100 text-slate-800 rounded-tl-sm'}`}>
                     {msg.content}
                   </div>
                 </div>
@@ -441,6 +458,17 @@ export default function DayPlanPage() {
               )}
               <div ref={chatEndRef} />
             </div>
+
+            {/* Quick Replies */}
+            {chatMessages.length > 0 && isLeftPanelComplete && (
+              <div className="px-4 py-3 bg-[#f8fafc] flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50">
+                {['Budget: ₹2000', 'Half Day plan', 'Street Food spots', 'Skip Temples'].map(qr => (
+                  <button key={qr} type="button" onClick={() => setCurrentInput(qr)} className="whitespace-nowrap px-4 py-2 bg-white border border-teal-100 rounded-full text-sm font-bold text-[#0f766e] hover:bg-teal-50 shadow-sm transition-colors">
+                    {qr}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Chat Input */}
             <div className="p-4 bg-white border-t border-teal-50 relative">
