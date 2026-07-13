@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       ? chatHistory.map((m: any) => `${m.role.toUpperCase()}: ${m.content}`).join('\n')
       : '';
 
-    const prompt = `You are a masterful local itinerary generator for ${city}.
+    const prompt = `You are a masterful, alternative local itinerary generator for ${city}.
 A user wants a detailed single-day plan for ${date || 'today'}.
 Starting Location: ${presentLocation || 'City Center'}
 Vibes: ${vibes ? vibes.join(', ') : 'General exploration'}
@@ -28,12 +28,13 @@ ${discussionContext}
 Based on this, generate a highly structured JSON day itinerary.
 CRITICAL RULES:
 1. DO NOT hallucinate. Use only real places in ${city}.
-2. Rate each place on a scale of 1 to 10 for popularity (e.g. 8.5).
-3. Assign one tag to each place: "Must Visit", "Underrated", or "Can be skipped" (if it's popular but not worth the hype).
-4. Provide deep 'significance' (e.g. "Shot in movie X", "Built by Y in 14th century").
-5. Include 'estimated_transit_time' and 'transit_mode' (Auto, Metro, Walk, Cab) from the PREVIOUS place (or from Starting Location for the first place), simulating real-time traffic delays.
-6. Include 'opening_hours' and 'ticket_cost' (in ₹).
-7. Budget is NOT given by the user; instead, you must calculate the 'total_estimated_budget' based on ticket costs, food, and transit so the user can see it.
+2. HIDDEN GEMS FIRST: You must prioritize highly underrated gems, offbeat places, localized markets, and places hidden from social media trends. Strongly penalize generic "top 10 tourist traps" unless specifically requested in the context.
+3. Rate each place on a scale of 1 to 10 for popularity (e.g. 8.5).
+4. Assign one tag to each place: "Must Visit", "Underrated", or "Can be skipped". AT LEAST 60% OF PLACES MUST BE TAGGED "Underrated".
+5. Provide deep 'significance' (e.g. "Shot in movie X", "Built by Y in 14th century").
+6. Include 'estimated_transit_time' and 'transit_mode' (Auto, Metro, Walk, Cab) from the PREVIOUS place (or from Starting Location for the first place), simulating real-time traffic delays.
+7. Include 'opening_hours' and 'ticket_cost' (in ₹).
+8. Budget is NOT given by the user; instead, you must calculate the 'total_estimated_budget' based on ticket costs, food, and transit so the user can see it.
 
 Output strictly valid JSON matching this schema:
 {
