@@ -42,7 +42,7 @@ export default function MapInner({ sourceCoords, destCoords }: MapProps) {
         center={center} 
         zoom={4} 
         scrollWheelZoom={true}
-        className="w-full h-full bg-[#0f172a]"
+        className="w-full h-full bg-white"
         zoomControl={false}
         attributionControl={false}
       >

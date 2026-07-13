@@ -1,0 +1,85 @@
+import { NextResponse } from 'next/server';
+import Groq from 'groq-sdk';
+import { prisma } from '@/lib/prisma';
+import jwt from 'jsonwebtoken';
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { city, date, presentLocation, vibes, chatHistory } = body;
+
+    // We can extract what they discussed from the chat history
+    const discussionContext = chatHistory 
+      ? chatHistory.map((m: any) => `${m.role.toUpperCase()}: ${m.content}`).join('\n')
+      : '';
+
+    const prompt = `You are a masterful local itinerary generator for ${city}.
+A user wants a detailed single-day plan for ${date || 'today'}.
+Starting Location: ${presentLocation || 'City Center'}
+Vibes: ${vibes ? vibes.join(', ') : 'General exploration'}
+
+Context from their discussion with the local guide AI:
+"""
+${discussionContext}
+"""
+
+Based on this, generate a highly structured JSON day itinerary.
+CRITICAL RULES:
+1. DO NOT hallucinate. Use only real places in ${city}.
+2. Rate each place on a scale of 1 to 10 for popularity (e.g. 8.5).
+3. Assign one tag to each place: "Must Visit", "Underrated", or "Can be skipped" (if it's popular but not worth the hype).
+4. Provide deep 'significance' (e.g. "Shot in movie X", "Built by Y in 14th century").
+5. Include 'estimated_transit_time' and 'transit_mode' (Auto, Metro, Walk, Cab) from the PREVIOUS place (or from Starting Location for the first place), simulating real-time traffic delays.
+6. Include 'opening_hours' and 'ticket_cost' (in ₹).
+7. Budget is NOT given by the user; instead, you must calculate the 'total_estimated_budget' based on ticket costs, food, and transit so the user can see it.
+
+Output strictly valid JSON matching this schema:
+{
+  "day_title": "string",
+  "total_estimated_budget": "string (e.g. ₹2500)",
+  "places": [
+    {
+      "time": "string (e.g. 10:00 AM - 12:30 PM)",
+      "name": "string",
+      "popularity_rating": number,
+      "tag": "Must Visit" | "Underrated" | "Can be skipped",
+      "description": "string",
+      "significance": "string",
+      "transit_from_previous": {
+        "mode": "string",
+        "duration": "string",
+        "traffic_note": "string"
+      },
+      "opening_hours": "string",
+      "ticket_cost": "string (e.g. ₹50 or Free)"
+    }
+  ]
+}`;
+
+    const response = await groq.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "llama-3.3-70b-versatile",
+      response_format: { type: "json_object" },
+      temperature: 0.7,
+    });
+
+    let content = response.choices[0]?.message?.content || '{}';
+    
+    const jsonStart = content.indexOf('{');
+    const jsonEnd = content.lastIndexOf('}');
+    if (jsonStart !== -1 && jsonEnd !== -1) {
+      content = content.slice(jsonStart, jsonEnd + 1);
+    }
+
+    const dayPlanData = JSON.parse(content);
+    return NextResponse.json(dayPlanData, { status: 200 });
+  } catch (error: any) {
+    console.error('Day Plan API Error:', error);
+    return NextResponse.json(
+      { error: error.message || 'Failed to generate day plan' },
+      { status: 500 }
+    );
+  }
+}

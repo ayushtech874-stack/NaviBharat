@@ -70,9 +70,9 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c1324] text-[#dce1fb] font-sans flex flex-col items-center justify-center relative overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-900 font-sans flex flex-col items-center justify-center relative overflow-x-hidden">
       {/* Theme Toggle Button */}
-      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-[#0f172a]/40 border border-white/10 backdrop-blur-md text-[#d8c3ad] hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
+      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/40 border border-teal-100 backdrop-blur-md text-slate-600 hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
         {isLightMode ? (
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         ) : (
@@ -83,13 +83,13 @@ export default function SignupPage() {
       {/* 3D Background Image */}
       <div className="fixed inset-0 z-0">
         <img src="/3d_india_home.png" alt="Himalayas Dashboard Background" className="w-full h-full object-cover opacity-50 mix-blend-screen" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0c1324]/40 via-[#0f172a]/60 to-[#0c1324] backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-[#0f172a]/60 to-[#0c1324] backdrop-blur-[2px]"></div>
       </div>
 
       {/* Main Content Container */}
       <main className="w-full max-w-[480px] px-4 md:px-0 z-10 my-12">
         {/* Signup Shell */}
-        <div className="bg-[#191f31]/60 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 md:p-10 flex flex-col items-center shadow-2xl">
+        <div className="bg-[#f8fafc]/60 backdrop-blur-2xl border border-teal-100 rounded-3xl p-8 md:p-10 flex flex-col items-center shadow-2xl">
           {/* Brand Identity */}
           <div className="mb-8 flex flex-col items-center gap-2">
             <Link href="/" className="flex flex-col items-center group cursor-pointer">
@@ -100,36 +100,36 @@ export default function SignupPage() {
 
           {/* Header Section */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-semibold text-[#dce1fb] mb-2">Join the Adventure</h2>
-            <p className="text-base text-[#d8c3ad] max-w-[320px] mx-auto">Create your account to start planning your next journey.</p>
+            <h2 className="text-3xl font-semibold text-slate-900 mb-2">Join the Adventure</h2>
+            <p className="text-base text-slate-600 max-w-[320px] mx-auto">Create your account to start planning your next journey.</p>
           </div>
 
           {/* Form Section */}
           <form className="w-full space-y-5" onSubmit={handleSignup}>
             {/* Full Name */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-[#dce1fb] ml-1">Full Name</label>
+              <label className="text-sm font-semibold text-slate-900 ml-1">Full Name</label>
               <div className="relative group">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d8c3ad] group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <input className="w-full bg-[#020617] border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-[#dce1fb] placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="name" name="name" placeholder="Enter your full name" type="text" required />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3.5 pl-12 pr-4 text-slate-900 placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="name" name="name" placeholder="Enter your full name" type="text" required />
               </div>
             </div>
 
             {/* Email Address */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-[#dce1fb] ml-1">Email Address</label>
+              <label className="text-sm font-semibold text-slate-900 ml-1">Email Address</label>
               <div className="relative group">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d8c3ad] group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <input className="w-full bg-[#020617] border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-[#dce1fb] placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="email" name="email" placeholder="you@example.com" type="email" required />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <input className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3.5 pl-12 pr-4 text-slate-900 placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="email" name="email" placeholder="you@example.com" type="email" required />
               </div>
             </div>
 
             {/* Password */}
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-[#dce1fb] ml-1">Password</label>
+              <label className="text-sm font-semibold text-slate-900 ml-1">Password</label>
               <div className="relative group">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d8c3ad] group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <input className="w-full bg-[#020617] border border-white/10 rounded-xl py-3.5 pl-12 pr-12 text-[#dce1fb] placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="password" name="password" placeholder="••••••••" type="password" required />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-[#ffc174] transition-colors w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3.5 pl-12 pr-12 text-slate-900 placeholder:text-[#a08e7a]/50 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" id="password" name="password" placeholder="••••••••" type="password" required />
               </div>
             </div>
 
@@ -158,7 +158,7 @@ export default function SignupPage() {
             </div>
 
             {/* Social Login */}
-            <button onClick={handleGoogleSignup} type="button" className="w-full flex items-center justify-center gap-3 border border-white/10 bg-white/5 py-4 rounded-xl text-sm font-semibold text-[#dce1fb] hover:bg-white/10 transition-all active:scale-95 cursor-pointer">
+            <button onClick={handleGoogleSignup} type="button" className="w-full flex items-center justify-center gap-3 border border-teal-100 bg-white/5 py-4 rounded-xl text-sm font-semibold text-slate-900 hover:bg-white/10 transition-all active:scale-95 cursor-pointer">
               <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
@@ -171,7 +171,7 @@ export default function SignupPage() {
 
           {/* Login Redirect */}
           <div className="mt-10 text-center">
-            <p className="text-base text-[#d8c3ad]">
+            <p className="text-base text-slate-600">
               Already have an account? 
               <Link className="text-[#ffc174] font-bold hover:underline underline-offset-4 transition-all ml-1" href="/login">Log In</Link>
             </p>
@@ -181,8 +181,8 @@ export default function SignupPage() {
         {/* Footer / AI Hint */}
         <div className="mt-8 flex flex-col items-center gap-4 animate-pulse">
           <div className="flex items-center gap-2 bg-[#4fdbc8]/10 border border-[#4fdbc8]/20 px-4 py-2 rounded-full">
-            <svg className="w-5 h-5 text-[#4fdbc8]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
-            <span className="text-[#4fdbc8] text-xs font-medium">AI-Powered personalized itineraries await</span>
+            <svg className="w-5 h-5 text-[#0f766e]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            <span className="text-[#0f766e] text-xs font-medium">AI-Powered personalized itineraries await</span>
           </div>
         </div>
       </main>

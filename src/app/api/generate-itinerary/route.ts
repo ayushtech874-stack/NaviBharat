@@ -53,6 +53,7 @@ Travel Style: ${travel_style || 'Standard'}
 ${knownPlacesContext}
 
 RULES:
+- ANTI-HALLUCINATION STRICT RULE: DO NOT invent, hallucinate, or make up any places, restaurants, or hotels. ALL locations mentioned MUST be real, verifiable, and currently existing places in the specific destination city. If you do not know enough real places to fill the itinerary, space out the activities or explicitly say "Free time" instead of creating fake names.
 - PRIORITIZE KNOWN PLACES when relevant (use Avg visit cost for entry_fees/food).
 - PACK EACH DAY with approximately 12 HOURS of engaging activities (usually 4-6 distinct places/events) to ensure a full day of travel.
 - For each activity, specify the 'historical_significance' or fun fact, and the 'transport_to_place' method.

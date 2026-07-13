@@ -129,15 +129,4 @@
   }
 }
 
-html.light-mode {
-  filter: invert(1) hue-rotate(180deg);
-  background: white;
-  min-height: 100vh;
-}
 
-html.light-mode img,
-html.light-mode video,
-html.light-mode svg.lucide,
-html.light-mode .leaflet-container {
-  filter: invert(1) hue-rotate(180deg); /* Re-invert to look normal */
-}

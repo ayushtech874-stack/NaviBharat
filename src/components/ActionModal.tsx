@@ -51,15 +51,15 @@ export default function ActionModal({
       case "error": return "border-red-500/50 shadow-red-900/20";
       case "success": return "border-teal-500/50 shadow-teal-900/20";
       case "prompt": return "border-amber-500/50 shadow-amber-900/20";
-      default: return "border-white/10 shadow-black/50";
+      default: return "border-teal-100 shadow-black/50";
     }
   };
 
   const getConfirmButtonStyles = () => {
     switch (type) {
-      case "error": return "bg-red-600 hover:bg-red-500 text-white";
-      case "success": return "bg-teal-600 hover:bg-teal-500 text-white";
-      case "prompt": return "bg-amber-600 hover:bg-amber-500 text-white";
+      case "error": return "bg-red-600 hover:bg-red-500 text-slate-900";
+      case "success": return "bg-teal-600 hover:bg-teal-500 text-slate-900";
+      case "prompt": return "bg-amber-600 hover:bg-amber-500 text-slate-900";
       default: return "bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950";
     }
   };
@@ -69,16 +69,16 @@ export default function ActionModal({
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={type !== "alert" && type !== "error" && type !== "success" ? onCancel : undefined}></div>
       <Card className={`relative z-10 w-full max-w-md bg-slate-900/95 backdrop-blur-xl border-2 ${getThemeColors()} shadow-2xl rounded-3xl overflow-hidden`}>
         {onCancel && (
-          <button onClick={onCancel} className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+          <button onClick={onCancel} className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors">
              <X size={20} />
           </button>
         )}
         <div className="p-6 md:p-8 flex flex-col items-center text-center">
-          <div className="w-16 h-16 rounded-full bg-slate-950/50 border border-white/5 shadow-inner flex items-center justify-center mb-5">
+          <div className="w-16 h-16 rounded-full bg-slate-950/50 border border-teal-50 shadow-inner flex items-center justify-center mb-5">
             {getIcon()}
           </div>
           
-          <h3 className="text-2xl font-bold text-white mb-2">{title}</h3>
+          <h3 className="text-2xl font-bold text-slate-900 mb-2">{title}</h3>
           <div className="text-slate-300 font-medium mb-6">
             {message}
           </div>
@@ -91,7 +91,7 @@ export default function ActionModal({
                 onChange={(e) => onInputChange(e.target.value)}
                 placeholder={inputPlaceholder}
                 autoFocus
-                className="w-full h-12 bg-black/50 border border-white/20 rounded-xl px-4 text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium placeholder-slate-500"
+                className="w-full h-12 bg-black/50 border border-white/20 rounded-xl px-4 text-slate-900 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all font-medium placeholder-slate-500"
               />
             </div>
           )}
@@ -102,7 +102,7 @@ export default function ActionModal({
                 variant="outline" 
                 onClick={onCancel} 
                 disabled={isLoading}
-                className="flex-1 bg-black/40 border-white/10 hover:bg-black/60 text-slate-300 hover:text-white h-12 rounded-xl"
+                className="flex-1 bg-black/40 border-teal-100 hover:bg-black/60 text-slate-300 hover:text-slate-900 h-12 rounded-xl"
               >
                 {cancelText}
               </Button>
@@ -112,7 +112,7 @@ export default function ActionModal({
               disabled={isLoading || (type === "prompt" && !inputValue?.trim())}
               className={`flex-1 font-bold h-12 rounded-xl transition-transform active:scale-95 ${getConfirmButtonStyles()}`}
             >
-              {isLoading ? <Loader2 size={18} className="animate-spin text-white flex-shrink-0" /> : confirmText}
+              {isLoading ? <Loader2 size={18} className="animate-spin text-slate-900 flex-shrink-0" /> : confirmText}
             </Button>
           </div>
         </div>
