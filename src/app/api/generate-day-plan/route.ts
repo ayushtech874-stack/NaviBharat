@@ -8,7 +8,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { city, date, presentLocation, vibes, chatHistory } = body;
+    const { city, date, presentLocation, chatHistory } = body;
 
     // We can extract what they discussed from the chat history
     const discussionContext = chatHistory 
@@ -18,9 +18,8 @@ export async function POST(req: Request) {
     const prompt = `You are a masterful, alternative local itinerary generator for ${city}.
 A user wants a detailed single-day plan for ${date || 'today'}.
 Starting Location: ${presentLocation || 'City Center'}
-Vibes: ${vibes ? vibes.join(', ') : 'General exploration'}
 
-Context from their discussion with the local guide AI:
+Context from their discussion with the local guide AI (which contains their vibe and preferences):
 """
 ${discussionContext}
 """

@@ -8,8 +8,6 @@ import MapWidget from "@/components/MapWidget";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const vibesList = ["Historical", "Food", "Nature", "Shopping", "Spiritual", "Art & Culture", "Photography", "Relaxation"];
-
 export default function DayPlanPage() {
   const router = useRouter();
   
@@ -32,7 +30,6 @@ export default function DayPlanPage() {
   const [showPresentLocationDropdown, setShowPresentLocationDropdown] = useState(false);
   const [selectedPresentLocation, setSelectedPresentLocation] = useState(false);
   const [presentCoords, setPresentCoords] = useState<[number, number] | null>(null);
-  const [vibes, setVibes] = useState<string[]>([]);
   
   const [chatMessages, setChatMessages] = useState<{role: 'user' | 'ai', content: string}[]>([]);
   const [currentInput, setCurrentInput] = useState("");
@@ -40,7 +37,6 @@ export default function DayPlanPage() {
   const [chatSessionId, setChatSessionId] = useState<string | null>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
-  const [customVibe, setCustomVibe] = useState("");
   
   const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -162,10 +158,14 @@ export default function DayPlanPage() {
     }
   }, [chatMessages, isTyping]);
 
-  const toggleVibe = (v: string) => {
-    if (vibes.includes(v)) setVibes(vibes.filter(x => x !== v));
-    else if (vibes.length < 3) setVibes([...vibes, v]);
-  };
+  useEffect(() => {
+    if (isLeftPanelComplete && chatMessages.length === 0) {
+      setChatMessages([{
+        role: 'ai',
+        content: "Hi! I see you're ready to plan your trip. What kind of vibe are you looking for today? (e.g. Historical, Food, Nature, Shopping, or something else!)"
+      }]);
+    }
+  }, [isLeftPanelComplete, chatMessages.length]);
 
   const handleGetCurrentLocation = () => {
     if ("geolocation" in navigator) {
@@ -200,7 +200,7 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation: presentLocation + " in " + presentCity, vibes,
+          city, date, presentLocation: presentLocation + " in " + presentCity,
           messages: newMessages,
           sessionId: chatSessionId
         })
@@ -229,13 +229,13 @@ export default function DayPlanPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          city, date, presentLocation: presentLocation + " in " + presentCity, vibes, chatHistory: chatMessages
+          city, date, presentLocation: presentLocation + " in " + presentCity, chatHistory: chatMessages
         })
       });
       if (res.ok) {
         const data = await res.json();
         sessionStorage.setItem('currentDayPlan', JSON.stringify(data));
-        sessionStorage.setItem('currentDayParams', JSON.stringify({ city, date, presentLocation, vibes }));
+        sessionStorage.setItem('currentDayParams', JSON.stringify({ city, date, presentLocation }));
         router.push("/day-itinerary/new");
       } else {
         alert("Failed to generate day plan. Try again.");
@@ -378,21 +378,6 @@ export default function DayPlanPage() {
                     dateFormat="MMMM d, yyyy"
                     minDate={new Date()}
                   />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-2">The Vibe (Max 3) - Optional</label>
-                <div className="flex flex-wrap gap-2">
-                  {vibesList.map(v => (
-                    <button key={v} onClick={() => toggleVibe(v)} className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${vibes.includes(v) ? 'bg-[#f59e0b] text-white shadow-md' : 'bg-[#f0fdfa] text-slate-600 border border-teal-100 hover:border-[#0f766e]'}`}>
-                      {v}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex gap-2 mt-3">
-                  <input type="text" value={customVibe} onChange={e => setCustomVibe(e.target.value)} placeholder="Or type a custom vibe..." className="flex-1 bg-[#f0fdfa] border border-teal-100 rounded-xl py-2 px-3 text-sm text-slate-800 focus:border-[#0f766e] outline-none" />
-                  <button type="button" onClick={() => { if(customVibe.trim() && vibes.length < 3 && !vibes.includes(customVibe)) { setVibes([...vibes, customVibe.trim()]); setCustomVibe(""); } }} className="px-4 py-2 bg-[#0f766e] text-white rounded-xl text-sm font-bold hover:bg-[#0d9488]">Add</button>
                 </div>
               </div>
 
