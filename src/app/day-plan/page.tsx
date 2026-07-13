@@ -46,6 +46,12 @@ export default function DayPlanPage() {
 
   const isLeftPanelComplete = Boolean(presentCity && presentLocation && city && date);
 
+  const getLocalDate = (dStr: string) => {
+    if (!dStr) return null;
+    const [y, m, d] = dStr.split('-');
+    return new Date(Number(y), Number(m) - 1, Number(d));
+  };
+
   // Debounced City Fetch
   useEffect(() => {
     if (selectedCity) {
@@ -357,8 +363,16 @@ export default function DayPlanPage() {
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e] z-10 pointer-events-none" />
                   <DatePicker
-                    selected={date ? new Date(date) : null}
-                    onChange={(d: Date | null) => setDate(d ? d.toISOString().split('T')[0] : "")}
+                    selected={getLocalDate(date)}
+                    onChange={(d: Date | null) => {
+                      if (d) {
+                        const offset = d.getTimezoneOffset();
+                        const localDate = new Date(d.getTime() - (offset * 60 * 1000));
+                        setDate(localDate.toISOString().split('T')[0]);
+                      } else {
+                        setDate("");
+                      }
+                    }}
                     placeholderText="Select a date"
                     className="w-full bg-[#f0fdfa] border border-teal-100 rounded-xl py-3 pl-10 pr-4 text-slate-800 font-medium focus:border-[#0f766e] outline-none"
                     dateFormat="MMMM d, yyyy"
