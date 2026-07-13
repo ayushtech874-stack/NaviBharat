@@ -1,18 +1,14 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Download, MapPin, Clock, Tag, Star, Info, Car, Train, Footprints, Calendar } from "lucide-react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 export default function DayItineraryPage() {
   const router = useRouter();
   const [dayPlan, setDayPlan] = useState<any>(null);
   const [params, setParams] = useState<any>(null);
-  const [downloading, setDownloading] = useState(false);
-  const printRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const data = sessionStorage.getItem("currentDayPlan");
@@ -25,24 +21,8 @@ export default function DayItineraryPage() {
     }
   }, [router]);
 
-  const handleDownload = async () => {
-    if (!printRef.current) return;
-    setDownloading(true);
-    try {
-      const canvas = await html2canvas(printRef.current, { scale: 2, useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`Day_Plan_${params?.city.split(',')[0]}.pdf`);
-    } catch (e) {
-      console.error(e);
-      alert("Failed to download PDF.");
-    } finally {
-      setDownloading(false);
-    }
+  const handleDownload = () => {
+    window.print();
   };
 
   if (!dayPlan) return <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">Loading...</div>;
@@ -64,16 +44,16 @@ export default function DayItineraryPage() {
     <div className="bg-[#f8fafc] min-h-screen text-slate-900 font-sans pb-20">
       
       {/* Nav */}
-      <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white/80 backdrop-blur-xl border-b border-teal-100 shadow-sm">
+      <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white/80 backdrop-blur-xl border-b border-teal-100 shadow-sm print:hidden">
         <button onClick={() => router.push("/day-plan")} className="flex items-center gap-2 text-slate-600 hover:text-[#0f766e] font-semibold transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back to Planner
         </button>
-        <button onClick={handleDownload} disabled={downloading} className="bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 shadow-lg hover:scale-105 transition-transform disabled:opacity-50">
-          <Download className="w-4 h-4" /> {downloading ? "Generating..." : "Download PDF"}
+        <button onClick={handleDownload} className="bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white px-6 py-2 rounded-xl font-bold flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+          <Download className="w-4 h-4" /> Download PDF
         </button>
       </nav>
 
-      <main className="max-w-4xl mx-auto mt-10 px-4" ref={printRef}>
+      <main className="max-w-4xl mx-auto mt-10 px-4 print:mt-0 print:p-0">
         <div className="bg-white rounded-3xl p-8 shadow-2xl border border-teal-50 mb-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-teal-50 rounded-full blur-[80px] -mr-20 -mt-20"></div>
           <div className="relative z-10">

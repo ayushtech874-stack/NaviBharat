@@ -45,6 +45,8 @@ export default function DayPlanPage() {
   
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  const isLeftPanelComplete = Boolean(presentCity && presentLocation && city && date && vibes.length > 0);
+
   // Debounced City Fetch
   useEffect(() => {
     if (selectedCity) {
@@ -416,12 +418,14 @@ export default function DayPlanPage() {
             <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] space-y-4">
               <div className="flex justify-start">
                  <div className="bg-white border border-teal-100 text-slate-700 px-4 py-3 rounded-2xl rounded-tl-sm max-w-[80%] shadow-sm text-sm">
-                   Hi there! Tell me what specific area you want to explore, or any specific monuments, food spots, or movies you love. I'll help draft your day!
+                   {isLeftPanelComplete 
+                     ? "Awesome! Your left panel is complete. I'm ready to help! What's your budget for the day? Any specific restaurant vibes or hours you prefer? Let me know!"
+                     : "Hi there! Please completely fill out the Day Plan details on the left (Present City, Present Location, Destination City, Date, and Vibes) to unlock our chat!"}
                  </div>
               </div>
               {chatMessages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`px-4 py-3 rounded-2xl max-w-[80%] shadow-sm text-sm ${msg.role === 'user' ? 'bg-[#0f766e] text-white rounded-tr-sm' : 'bg-white border border-teal-100 text-slate-700 rounded-tl-sm'}`}>
+                  <div className={`px-4 py-3 rounded-2xl max-w-[80%] shadow-sm text-sm whitespace-pre-wrap ${msg.role === 'user' ? 'bg-[#0f766e] text-white rounded-tr-sm' : 'bg-white border border-teal-100 text-slate-700 rounded-tl-sm'}`}>
                     {msg.content}
                   </div>
                 </div>
@@ -439,7 +443,12 @@ export default function DayPlanPage() {
             </div>
 
             {/* Chat Input */}
-            <div className="p-4 bg-white border-t border-teal-50">
+            <div className="p-4 bg-white border-t border-teal-50 relative">
+              {!isLeftPanelComplete && (
+                <div className="absolute inset-0 z-20 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-sm font-bold text-slate-600 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-200">Fill the left panel to unlock chat</span>
+                </div>
+              )}
               <form onSubmit={handleSendMessage} className="relative">
                 <input type="text" value={currentInput} onChange={e => setCurrentInput(e.target.value)} placeholder="Type a message..." className="w-full bg-[#f0fdfa] border border-teal-100 rounded-full py-3 pl-4 pr-12 text-sm focus:border-[#0f766e] outline-none" />
                 <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-[#0f766e] text-white rounded-full flex items-center justify-center hover:bg-[#0d9488] transition-colors">
