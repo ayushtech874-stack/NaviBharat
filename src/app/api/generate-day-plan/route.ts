@@ -38,6 +38,9 @@ Output strictly valid JSON matching this schema:
   "day_title": "string",
   "estimated_budget": "string (e.g. ₹800)",
   "budget_includes": "string (e.g. Includes entry tickets and approx local transport)",
+  "top_3_places": [
+    { "name": "string", "reason": "string" }
+  ],
   "places": [
     {
       "time": "string (e.g. 10:00 AM - 12:30 PM)",

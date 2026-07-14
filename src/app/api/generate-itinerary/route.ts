@@ -89,6 +89,9 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
     }
   ],
   "hidden_gems": ["string"],
+  "top_3_places": [
+    { "name": "string", "reason": "string" }
+  ],
   "food_recommendations": ["string"],
   "cultural_experiences": ["string"],
   "budget_saving_tips": ["string"],
@@ -152,6 +155,11 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
           }
         ],
         hidden_gems: ["Secret local cafe tucked in an alleyway", "A quiet sunset viewpoint away from tourists"],
+        top_3_places: [
+          { name: "Historical Fort", reason: "An architectural marvel offering panoramic views." },
+          { name: "Heritage Museum", reason: "Provides deep insights into local culture." },
+          { name: "City Central Square", reason: "The bustling heart of the city." }
+        ],
         food_recommendations: ["Spicy local street food", "Traditional homestyle thali/platter"],
         cultural_experiences: ["Attending a local evening ceremony", "Crafting workshop with local artisans"],
         budget_saving_tips: ["Use local buses instead of cabs", "Eat at local dhabas instead of tourist restaurants", "Book attraction tickets online in advance"],

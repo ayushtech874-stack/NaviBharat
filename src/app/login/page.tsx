@@ -61,9 +61,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0fdfa] text-slate-900 flex items-center justify-center font-sans relative px-4 overflow-hidden">
+    <div className="min-h-screen bg-[#f0fdfa] text-slate-900 dark:text-slate-100 flex items-center justify-center font-sans relative px-4 overflow-hidden">
       {/* Theme Toggle Button */}
-      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/40 border border-teal-100 backdrop-blur-md text-slate-600 hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
+      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/40 border border-teal-100 dark:border-teal-900 backdrop-blur-md text-slate-600 dark:text-slate-300 hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
         {isLightMode ? (
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         ) : (
@@ -89,36 +89,36 @@ export default function LoginPage() {
         </div>
         
         {/* Main Card */}
-        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl relative overflow-hidden bg-[#f8fafc]/60 backdrop-blur-2xl border border-teal-100">
+        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl dark:shadow-none relative overflow-hidden bg-[#f8fafc]/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900">
           {/* Decorative Accent */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffc174]/5 blur-3xl rounded-full"></div>
           
           <div className="relative z-10 text-center mb-10">
-            <h2 className="text-3xl font-semibold text-slate-900 mb-2">Welcome Back, Explorer</h2>
-            <p className="text-base text-slate-600">Log in to plan your next adventure.</p>
+            <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100 mb-2">Welcome Back, Explorer</h2>
+            <p className="text-base text-slate-600 dark:text-slate-300">Log in to plan your next adventure.</p>
           </div>
           
           <form className="space-y-6" onSubmit={handleEmailLogin}>
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-slate-600 ml-1" htmlFor="email">Email Address</label>
+              <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1" htmlFor="email">Email Address</label>
               <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <input className="w-full h-14 bg-[#e2e8f0] border border-teal-50 rounded-xl pl-12 pr-4 text-slate-900 placeholder:text-slate-600/40 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent outline-none transition-all duration-200" id="email" name="email" placeholder="explorer@navibharat.ai" type="email" required />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-300 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <input className="w-full h-14 bg-[#e2e8f0] border border-teal-50 dark:border-teal-900 rounded-xl pl-12 pr-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-600 dark:text-slate-300/40 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent outline-none transition-all duration-200" id="email" name="email" placeholder="explorer@navibharat.ai" type="email" required />
               </div>
             </div>
             
             <div className="space-y-2">
               <div className="flex justify-between items-center px-1">
-                <label className="block text-sm font-semibold text-slate-600" htmlFor="password">Password</label>
+                <label className="block text-sm font-semibold text-slate-600 dark:text-slate-300" htmlFor="password">Password</label>
               </div>
               <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <input className="w-full h-14 bg-[#e2e8f0] border border-teal-50 rounded-xl pl-12 pr-4 text-slate-900 placeholder:text-slate-600/40 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent outline-none transition-all duration-200" id="password" name="password" placeholder="••••••••" type="password" required />
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-300 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input className="w-full h-14 bg-[#e2e8f0] border border-teal-50 dark:border-teal-900 rounded-xl pl-12 pr-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-600 dark:text-slate-300/40 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent outline-none transition-all duration-200" id="password" name="password" placeholder="••••••••" type="password" required />
               </div>
             </div>
 
             {status && (
-              <div className={`py-3 px-4 ${status.includes('failed') || status.includes('Error') ? 'bg-[#93000a]/80 text-[#ffdad6]' : 'bg-[#003f38]/80 text-[#71f8e4]'} rounded-xl text-xs flex justify-center font-bold animate-in fade-in slide-in-from-top-2 border border-teal-100 shadow-inner`}>
+              <div className={`py-3 px-4 ${status.includes('failed') || status.includes('Error') ? 'bg-[#93000a]/80 text-[#ffdad6]' : 'bg-[#003f38]/80 text-[#71f8e4]'} rounded-xl text-xs flex justify-center font-bold animate-in fade-in slide-in-from-top-2 border border-teal-100 dark:border-teal-900 shadow-inner`}>
                 <span className="flex-1 text-center">{status}</span>
               </div>
             )}
@@ -131,12 +131,12 @@ export default function LoginPage() {
             </div>
             
             <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-teal-100"></div>
-              <span className="flex-shrink mx-4 text-xs font-medium text-slate-600/60 uppercase tracking-widest">or continue with</span>
-              <div className="flex-grow border-t border-teal-100"></div>
+              <div className="flex-grow border-t border-teal-100 dark:border-teal-900"></div>
+              <span className="flex-shrink mx-4 text-xs font-medium text-slate-600 dark:text-slate-300/60 uppercase tracking-widest">or continue with</span>
+              <div className="flex-grow border-t border-teal-100 dark:border-teal-900"></div>
             </div>
             
-            <button onClick={handleGoogleLogin} className="w-full h-14 bg-white/5 border border-teal-100 hover:bg-white/10 text-slate-900 text-sm font-semibold rounded-xl active:scale-95 transition-all duration-200 flex items-center justify-center gap-3" type="button">
+            <button onClick={handleGoogleLogin} className="w-full h-14 bg-white/5 border border-teal-100 dark:border-teal-900 hover:bg-white/10 text-slate-900 dark:text-slate-100 text-sm font-semibold rounded-xl active:scale-95 transition-all duration-200 flex items-center justify-center gap-3" type="button">
               <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
@@ -148,7 +148,7 @@ export default function LoginPage() {
           </form>
           
           <div className="mt-10 text-center">
-            <p className="text-base text-slate-600">
+            <p className="text-base text-slate-600 dark:text-slate-300">
               Don't have an account?{" "}
               <Link className="text-[#0f766e] text-sm font-semibold hover:underline decoration-2 underline-offset-4 transition-all" href="/signup">Sign Up</Link>
             </p>
