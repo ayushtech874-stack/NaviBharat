@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import Groq from 'groq-sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key';
 
 /** Optionally decode the JWT — returns null if missing / invalid (not an error) */
@@ -101,17 +101,19 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
   }
 }`;
 
-    // ── 3. Call Groq (with fallback for invalid keys) ────────────────────────
+    // ── 3. Call Gemini (with fallback for invalid keys) ────────────────────────
     let jsonStr = '';
     try {
-      const response = await groq.chat.completions.create({
-        messages: [{ role: "user", content: prompt }],
-        model: "llama-3.3-70b-versatile",
-        response_format: { type: "json_object" },
-        temperature: 0.7,
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.7,
+        }
       });
 
-      let content = response.choices[0]?.message?.content || '{}';
+      let content = result.response.text() || '{}';
       
       // Safety check: Extract substring from first '{' to last '}'
       const jsonStart = content.indexOf('{');
@@ -122,7 +124,7 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
         jsonStr = content;
       }
     } catch (apiError) {
-      console.warn("Groq API call failed. Using fallback mock data.", apiError);
+      console.warn("Gemini API call failed. Using fallback mock data.", apiError);
       jsonStr = JSON.stringify({
         transit_options: [
           { mode: "Flight", estimated_cost: "₹5500", duration: "2 hrs" },

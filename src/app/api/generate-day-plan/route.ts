@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import Groq from 'groq-sdk';
-import { prisma } from '@/lib/prisma';
-import jwt from 'jsonwebtoken';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
 
 export async function POST(req: Request) {
   try {
@@ -59,15 +57,21 @@ Output strictly valid JSON matching this schema:
   ]
 }`;
 
-    const response = await groq.chat.completions.create({
-      messages: [{ role: "user", content: prompt }],
-      model: "llama-3.3-70b-versatile",
-      response_format: { type: "json_object" },
-      temperature: 0.7,
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-pro",
     });
 
-    let content = response.choices[0]?.message?.content || '{}';
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.7,
+      }
+    });
+
+    let content = result.response.text() || '{}';
     
+    // In case there's any markdown wrapping around JSON
     const jsonStart = content.indexOf('{');
     const jsonEnd = content.lastIndexOf('}');
     if (jsonStart !== -1 && jsonEnd !== -1) {

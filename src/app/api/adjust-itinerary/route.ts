@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import Groq from 'groq-sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
 
 export async function POST(req: Request) {
   try {
@@ -22,14 +22,16 @@ User Request: "${prompt}"`;
 
     let finalJsonStr = '';
     try {
-      const response = await groq.chat.completions.create({
-        messages: [{ role: "user", content: sysPrompt }],
-        model: "llama-3.3-70b-versatile",
-        response_format: { type: "json_object" },
-        temperature: 0.5,
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent({
+        contents: [{ role: "user", parts: [{ text: sysPrompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.5,
+        }
       });
 
-      let content = response.choices[0]?.message?.content || '{}';
+      let content = result.response.text() || '{}';
       
       const jsonStart = content.indexOf('{');
       const jsonEnd = content.lastIndexOf('}');
@@ -39,7 +41,7 @@ User Request: "${prompt}"`;
         finalJsonStr = content;
       }
     } catch (apiErr) {
-      console.error("Groq API error during tweak", apiErr);
+      console.error("Gemini API error during tweak", apiErr);
       return NextResponse.json({ error: 'AI tuning failed. Try again via a different prompt.' }, { status: 502 });
     }
 
