@@ -1,32 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function SignupPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
   
-  useEffect(() => {
-    if (document.documentElement.classList.contains('light-mode')) {
-      setIsLightMode(true);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (isLightMode) {
-      document.documentElement.classList.remove('light-mode');
-      setIsLightMode(false);
-    } else {
-      document.documentElement.classList.add('light-mode');
-      setIsLightMode(true);
-    }
-  };
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -72,13 +56,9 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans flex flex-col items-center justify-center relative overflow-x-hidden">
       {/* Theme Toggle Button */}
-      <button onClick={toggleTheme} className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/40 border border-teal-100 dark:border-teal-900 backdrop-blur-md text-slate-600 dark:text-slate-300 hover:text-[#ffc174] transition-all duration-300 transform hover:scale-110 shadow-lg shadow-[#ffc174]/10">
-        {isLightMode ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-        )}
-      </button>
+      <div className="absolute top-6 right-6 z-50 rounded-full bg-white/40 border border-teal-100 dark:border-teal-900 backdrop-blur-md shadow-lg shadow-[#ffc174]/10">
+        <ThemeToggle />
+      </div>
 
       {/* 3D Background Image */}
       <div className="fixed inset-0 z-0">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Download, Share2, Navigation, Mail, Sun, Sunset, Moon, Sparkles, MapPin, IndianRupee, Clock, Bed, Utensils, Car, Ticket, CheckCircle2, Star } from "lucide-react";
 import MapWidget from "@/components/MapWidget";
 import ActionModal, { ModalType } from "@/components/ActionModal";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function ItineraryPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -401,6 +402,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <button onClick={handleDownloadPdf} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 transition-colors shadow-sm">
             <Download size={18} className="text-slate-900 dark:text-slate-100" />
             <span className="font-semibold text-sm">Download PDF</span>
@@ -437,10 +439,10 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
       {/* Sticky Tab Bar */}
       <nav className="sticky top-[72px] z-40 px-4 md:px-10 bg-[#f0fdfa]/80 backdrop-blur-md border-y border-teal-50 dark:border-teal-900 py-4">
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-1 rounded-2xl shadow-sm overflow-x-auto w-full md:w-auto">
-            <button onClick={() => setActiveTab("timeline")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'timeline' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-slate-900 dark:text-slate-100 shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Timeline</button>
-            <button onClick={() => setActiveTab("overview")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'overview' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-slate-900 dark:text-slate-100 shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Overview</button>
-            <button onClick={() => setActiveTab("budget")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'budget' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-slate-900 dark:text-slate-100 shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Costs</button>
+          <div className="flex items-center gap-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-1 rounded-2xl shadow-sm overflow-x-auto w-full md:w-auto">
+            <button onClick={() => setActiveTab("timeline")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'timeline' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Timeline</button>
+            <button onClick={() => setActiveTab("overview")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'overview' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Overview</button>
+            <button onClick={() => setActiveTab("budget")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'budget' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Costs</button>
           </div>
           <div className="flex items-center gap-4 w-full md:w-auto">
             {id === 'new' && (

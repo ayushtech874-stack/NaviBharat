@@ -15,7 +15,6 @@ const preferencesOptions = ["Adventure", "Cultural", "Food", "Nature", "Wellness
 export default function PlanTripPage() {
   const router = useRouter();
   const [isGenerating, setIsGenerating] = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
   
   // Form State
   const [source, setSource] = useState("");
@@ -41,12 +40,6 @@ export default function PlanTripPage() {
   const [showDestDropdown, setShowDestDropdown] = useState(false);
   const [selectedSource, setSelectedSource] = useState(false);
   const [selectedDest, setSelectedDest] = useState(false);
-
-  useEffect(() => {
-    if (document.documentElement.classList.contains('light-mode')) {
-      setIsLightMode(true);
-    }
-  }, []);
 
   const togglePreference = (pref: string) => {
     if (preferences.includes(pref)) {
