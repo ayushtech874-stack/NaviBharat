@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+export const maxDuration = 60;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
 
 export async function POST(req: Request) {
@@ -61,7 +63,7 @@ Output strictly valid JSON matching this schema:
 }`;
 
     const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-pro",
+        model: "gemini-1.5-flash",
     });
 
     const result = await model.generateContent({

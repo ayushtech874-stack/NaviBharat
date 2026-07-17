@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
+export const maxDuration = 60;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key';
 
@@ -107,7 +109,7 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
     // ── 3. Call Gemini (with fallback for invalid keys) ────────────────────────
     let jsonStr = '';
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent({
         contents: [{ role: "user", parts: [{ text: prompt }] }],
         generationConfig: {
