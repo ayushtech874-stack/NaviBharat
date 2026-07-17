@@ -205,7 +205,7 @@ export default function PlanTripPage() {
       {/* Full Page Background */}
       <div className="fixed inset-0 z-0">
         <img alt="3D Neon Grid Map of India" className="w-full h-full object-cover opacity-60 mix-blend-luminosity" src="/3d_india_dashboard.png" />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, rgba(2, 6, 23, 0.4) 0%, rgba(2, 6, 23, 0.95) 100%), linear-gradient(to bottom, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 1) 90%)' }}></div>
+        <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/80 backdrop-blur-[2px]"></div>
       </div>
 
       {/* TopNavBar */}
@@ -412,7 +412,7 @@ export default function PlanTripPage() {
                 )}
 
                 {/* Wikipedia Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(12, 19, 36, 1) 0%, rgba(12, 19, 36, 0.7) 50%, rgba(12, 19, 36, 0) 100%)' }}>
+                <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none bg-gradient-to-t from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 dark:to-transparent">
                   {destInfo ? (
                      <div className="flex gap-4 items-start pointer-events-auto bg-white/50 dark:bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-xl">
                         {destInfo.image && (

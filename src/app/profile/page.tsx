@@ -146,7 +146,7 @@ export default function ProfilePage() {
   const joinedYear = user?.createdAt ? new Date(user.createdAt).getFullYear() : "2024";
 
   return (
-    <div className="bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen font-sans overflow-x-hidden relative" style={{ background: 'radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 35%), radial-gradient(circle at 100% 100%, rgba(20, 184, 166, 0.08) 0%, transparent 35%), #020617' }}>
+    <div className="bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen font-sans overflow-x-hidden relative" style={{ backgroundImage: 'radial-gradient(circle at 0% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 35%), radial-gradient(circle at 100% 100%, rgba(20, 184, 166, 0.08) 0%, transparent 35%)' }}>
       
       <ActionModal
         isOpen={modalState.isOpen}
@@ -232,17 +232,17 @@ export default function ProfilePage() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Full Name</label>
-                <input required onChange={(e) => setName(e.target.value)} value={name} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="text" placeholder="Your full name" />
+                <input required onChange={(e) => setName(e.target.value)} value={name} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="text" placeholder="Your full name" />
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Phone Number</label>
-                  <input onChange={(e) => setPhone(e.target.value)} value={phone} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="tel" placeholder="+91 98765 43210" />
+                  <input onChange={(e) => setPhone(e.target.value)} value={phone} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="tel" placeholder="+91 98765 43210" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Gender</label>
-                  <select onChange={(e) => setGender(e.target.value)} value={gender} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+                  <select onChange={(e) => setGender(e.target.value)} value={gender} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]">
                     <option value="" disabled>Select Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -255,11 +255,11 @@ export default function ProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Age</label>
-                  <input onChange={(e) => setAge(e.target.value)} value={age} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="number" placeholder="28" />
+                  <input onChange={(e) => setAge(e.target.value)} value={age} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="number" placeholder="28" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Date of Birth</label>
-                  <input onChange={(e) => setDateOfBirth(e.target.value)} value={dateOfBirth} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="date" />
+                  <input onChange={(e) => setDateOfBirth(e.target.value)} value={dateOfBirth} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#ffc174] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(245,158,11,0)] focus:shadow-[0_0_15px_rgba(245,158,11,0.1)]" type="date" />
                 </div>
               </div>
             </div>
@@ -275,11 +275,11 @@ export default function ProfilePage() {
             <div className="space-y-6 h-full flex flex-col">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Occupation</label>
-                <input onChange={(e) => setOccupation(e.target.value)} value={occupation} className="w-full bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#4fdbc8] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(20,184,166,0)] focus:shadow-[0_0_15px_rgba(20,184,166,0.1)]" type="text" placeholder="e.g. Adventure Photographer" />
+                <input onChange={(e) => setOccupation(e.target.value)} value={occupation} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#4fdbc8] focus:border-transparent outline-none transition-all shadow-[0_0_15px_rgba(20,184,166,0)] focus:shadow-[0_0_15px_rgba(20,184,166,0.1)]" type="text" placeholder="e.g. Adventure Photographer" />
               </div>
               <div className="space-y-2 flex-1 pb-16">
                 <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 ml-1">Travel Biography</label>
-                <textarea onChange={(e) => setBiography(e.target.value)} value={biography} className="w-full h-40 md:h-[calc(100%-2rem)] bg-[#e2e8f0] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-4 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#4fdbc8] focus:border-transparent outline-none transition-all resize-none shadow-[0_0_15px_rgba(20,184,166,0)] focus:shadow-[0_0_15px_rgba(20,184,166,0.1)]" placeholder="Tell us your travel story..."></textarea>
+                <textarea onChange={(e) => setBiography(e.target.value)} value={biography} className="w-full h-40 md:h-[calc(100%-2rem)] bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-4 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#4fdbc8] focus:border-transparent outline-none transition-all resize-none shadow-[0_0_15px_rgba(20,184,166,0)] focus:shadow-[0_0_15px_rgba(20,184,166,0.1)]" placeholder="Tell us your travel story..."></textarea>
               </div>
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function ProfilePage() {
       </main>
 
       {/* Bottom Action Bar */}
-      <footer className="fixed bottom-0 left-0 w-full z-40 bg-[#e2e8f0]/80 backdrop-blur-md border-t border-teal-50 dark:border-teal-900">
+      <footer className="fixed bottom-0 left-0 w-full z-40 bg-[#f8fafc] dark:bg-slate-800/80 backdrop-blur-md border-t border-teal-50 dark:border-teal-900">
         <div className="flex justify-between items-center py-4 md:py-6 px-6 md:px-10 w-full max-w-[1280px] mx-auto gap-4">
           <div className="flex items-center gap-2">
             <svg className="text-slate-600 dark:text-slate-300/40 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
