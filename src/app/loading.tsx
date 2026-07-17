@@ -13,7 +13,7 @@ export default function Loading() {
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white dark:bg-slate-950">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white dark:bg-slate-900 dark:bg-slate-950">
       <div className="relative w-64 h-64 md:w-96 md:h-96 animate-pulse duration-1000">
         <Image 
           src="/monuments.png" 

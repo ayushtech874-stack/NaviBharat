@@ -57,10 +57,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen relative flex flex-col font-sans bg-[#f0fdfa] text-slate-900 dark:text-slate-100 overflow-x-hidden selection:bg-[#ffc174]/30">
+    <div className="min-h-screen relative flex flex-col font-sans bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 overflow-x-hidden selection:bg-[#ffc174]/30">
       
       {/* Top Navigation Bar */}
-      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-white/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-md transition-all duration-300" id="mainNav">
+      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-md transition-all duration-300" id="mainNav">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link href="/" className="font-bold text-xl sm:text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
              <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-xl shadow-md" />
@@ -117,7 +117,7 @@ export default function Home() {
                </button>
             </Link>
             <Link href="/day-plan">
-               <button className="bg-white/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 shadow-xl px-8 py-4 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-lg transition-all hover:scale-105 active:scale-95 group flex items-center hover:bg-white dark:bg-slate-900 hover:text-[#0f766e]">
+               <button className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 shadow-xl px-8 py-4 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-lg transition-all hover:scale-105 active:scale-95 group flex items-center hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 hover:text-[#0f766e]">
                  Plan your day
                  <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                </button>
@@ -127,7 +127,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 px-4 md:px-10 bg-[#f0fdfa] relative overflow-hidden">
+      <section className="py-24 px-4 md:px-10 bg-[#f0fdfa] dark:bg-slate-950 relative overflow-hidden">
         <div className="max-w-[1280px] mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">How NaviBharat Works</h2>
@@ -136,7 +136,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Card 1 */}
-            <div className="backdrop-blur-xl bg-white/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+            <div className="backdrop-blur-xl bg-white/60 dark:bg-slate-900/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
               <div className="w-16 h-16 rounded-2xl bg-[#f59e0b]/20 border border-[#f59e0b]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all">
                 <MapPin className="text-[#f59e0b] w-8 h-8" />
               </div>
@@ -147,7 +147,7 @@ export default function Home() {
             </div>
             
             {/* Card 2 */}
-            <div className="backdrop-blur-xl bg-white/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+            <div className="backdrop-blur-xl bg-white/60 dark:bg-slate-900/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
               <div className="w-16 h-16 rounded-2xl bg-[#4fdbc8]/20 border border-[#4fdbc8]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(79,219,200,0.3)] transition-all">
                 <svg className="text-[#0f766e] w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m7.8 16.2-2.9 2.9"/><path d="M2 12h4"/><path d="m7.8 7.8-2.9-2.9"/><path d="m9 12 3-3 3 3-3 3-3-3Z"/></svg>
               </div>
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
             
             {/* Card 3 */}
-            <div className="backdrop-blur-xl bg-white/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
+            <div className="backdrop-blur-xl bg-white/60 dark:bg-slate-900/60 border border-teal-100 dark:border-teal-900 p-8 rounded-3xl group hover:scale-[1.02] transition-all duration-500">
               <div className="w-16 h-16 rounded-2xl bg-[#f59e0b]/20 border border-[#f59e0b]/30 flex items-center justify-center mb-8 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all">
                 <Calendar className="text-[#f59e0b] w-8 h-8" />
               </div>
@@ -179,7 +179,7 @@ export default function Home() {
       <section className="py-24 px-4 md:px-10 bg-[#e2e8f0] border-t border-teal-50 dark:border-teal-900">
         <div className="max-w-2xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-12">We value your feedback</h2>
-          <div className="backdrop-blur-xl bg-white/60 border border-teal-100 dark:border-teal-900 p-8 md:p-12 rounded-[2rem] text-left shadow-2xl dark:shadow-none">
+          <div className="backdrop-blur-xl bg-white/60 dark:bg-slate-900/60 border border-teal-100 dark:border-teal-900 p-8 md:p-12 rounded-[2rem] text-left shadow-2xl dark:shadow-none">
             <form onSubmit={handleFeedbackSubmit} className="space-y-6">
               <div className="space-y-2">
                 <label className="font-semibold text-sm text-slate-600 dark:text-slate-300 ml-1">Name</label>
@@ -188,7 +188,7 @@ export default function Home() {
                   value={feedbackName} 
                   onChange={(e) => setFeedbackName(e.target.value)} 
                   required 
-                  className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" 
+                  className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none" 
                   placeholder="Your name" 
                 />
               </div>
@@ -198,7 +198,7 @@ export default function Home() {
                   value={feedbackMsg} 
                   onChange={(e) => setFeedbackMsg(e.target.value)} 
                   required 
-                  className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none resize-none" 
+                  className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl px-4 py-3 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-[#f59e0b] focus:border-transparent transition-all outline-none resize-none" 
                   placeholder="How can we make your journeys better?" 
                   rows={4}
                 ></textarea>

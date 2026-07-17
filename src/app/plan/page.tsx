@@ -171,7 +171,7 @@ export default function PlanTripPage() {
 
   if (isGenerating) {
     return (
-      <div className="min-h-screen bg-[#f0fdfa] flex flex-col items-center justify-center text-slate-900 dark:text-slate-100 p-4 relative">
+      <div className="min-h-screen bg-[#f0fdfa] dark:bg-slate-950 flex flex-col items-center justify-center text-slate-900 dark:text-slate-100 p-4 relative">
         {destInfo?.image ? (
           <div className="absolute inset-0 bg-cover bg-center opacity-20 transition-opacity duration-1000" style={{backgroundImage: `url(${destInfo.image})`}}></div>
         ) : (
@@ -201,7 +201,7 @@ export default function PlanTripPage() {
   }
 
   return (
-    <div className="bg-[#f0fdfa] text-slate-900 dark:text-slate-100 font-sans selection:bg-[#ffc174] selection:text-[#472a00] min-h-screen relative">
+    <div className="bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#ffc174] selection:text-[#472a00] min-h-screen relative">
       {/* Full Page Background */}
       <div className="fixed inset-0 z-0">
         <img alt="3D Neon Grid Map of India" className="w-full h-full object-cover opacity-60 mix-blend-luminosity" src="/3d_india_dashboard.png" />
@@ -209,7 +209,7 @@ export default function PlanTripPage() {
       </div>
 
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-md h-20 flex justify-between items-center px-4 sm:px-6 md:px-10">
+      <nav className="fixed top-0 w-full z-50 bg-white/60 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-md h-20 flex justify-between items-center px-4 sm:px-6 md:px-10">
         <div className="flex items-center gap-2 sm:gap-8">
           <Link href="/" className="font-bold text-xl sm:text-3xl tracking-tight text-[#ffc174] flex items-center gap-2">
              <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-lg shadow-sm" />
@@ -240,7 +240,7 @@ export default function PlanTripPage() {
         <form onSubmit={handleGenerate} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
           {/* Left Column: Expedition Logistics */}
           <div className="col-span-12 lg:col-span-8">
-            <div className="bg-white/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 border-t-4 border-t-[#4fdbc8]/50 shadow-2xl dark:shadow-none">
+            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 border-t-4 border-t-[#4fdbc8]/50 shadow-2xl dark:shadow-none">
               <h2 className="text-2xl font-bold mb-8 text-slate-900 dark:text-slate-100">Expedition Logistics</h2>
               <div className="space-y-8">
                 {/* Origin & Destination */}
@@ -249,11 +249,11 @@ export default function PlanTripPage() {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">Origin</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffc174] shadow-[0_0_8px_rgba(255,193,116,0.6)]"></span>
-                      <input required type="text" value={source} onChange={e => { setSource(e.target.value); setShowSourceDropdown(true); }} placeholder="e.g. New Delhi, India" className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 focus:border-[#ffc174] focus:ring-0 transition-all outline-none shadow-inner" />
+                      <input required type="text" value={source} onChange={e => { setSource(e.target.value); setShowSourceDropdown(true); }} placeholder="e.g. New Delhi, India" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#ffc174] focus:ring-0 transition-all outline-none shadow-inner" />
                       {showSourceDropdown && sourceSuggestions.length > 0 && (
-                        <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
+                        <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                           {sourceSuggestions.map((sug, idx) => (
-                            <div key={idx} className="px-4 py-3 hover:bg-white dark:bg-slate-900 cursor-pointer text-sm text-slate-900 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none transition-colors" onClick={() => {
+                            <div key={idx} className="px-4 py-3 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 dark:hover:bg-slate-700 cursor-pointer text-sm text-slate-900 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none transition-colors" onClick={() => {
                                setSelectedSource(true);
                                setSource(sug.display_name);
                                setSourceCoords([parseFloat(sug.lat), parseFloat(sug.lon)]);
@@ -273,11 +273,11 @@ export default function PlanTripPage() {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">Destination</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#4fdbc8] shadow-[0_0_8px_rgba(79,219,200,0.6)]"></span>
-                      <input required type="text" value={destination} onChange={e => { setDestination(e.target.value); setShowDestDropdown(true); }} placeholder="Where to?" className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 focus:border-[#4fdbc8] focus:ring-0 transition-all outline-none shadow-inner" />
+                      <input required type="text" value={destination} onChange={e => { setDestination(e.target.value); setShowDestDropdown(true); }} placeholder="Where to?" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#4fdbc8] focus:ring-0 transition-all outline-none shadow-inner" />
                       {showDestDropdown && destSuggestions.length > 0 && (
-                        <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
+                        <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                           {destSuggestions.map((sug, idx) => (
-                            <div key={idx} className="px-4 py-3 hover:bg-white dark:bg-slate-900 cursor-pointer text-sm text-slate-900 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none transition-colors" onClick={() => {
+                            <div key={idx} className="px-4 py-3 hover:bg-white dark:hover:bg-slate-800 dark:bg-slate-900 dark:hover:bg-slate-700 cursor-pointer text-sm text-slate-900 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none transition-colors" onClick={() => {
                                setSelectedDest(true);
                                setDestination(sug.display_name);
                                setDestCoords([parseFloat(sug.lat), parseFloat(sug.lon)]);
@@ -294,7 +294,7 @@ export default function PlanTripPage() {
 
                 {/* Party & Cost */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="flex items-center justify-between p-4 bg-[#f8fafc] rounded-xl border border-teal-50 dark:border-teal-900">
+                  <div className="flex items-center justify-between p-4 bg-[#f8fafc] dark:bg-slate-800/50 rounded-xl border border-teal-50 dark:border-teal-900">
                     <span className="font-semibold text-sm text-slate-900 dark:text-slate-100">Travel Party</span>
                     <div className="flex items-center gap-4">
                       <button type="button" onClick={() => setTravelers(Math.max(1, travelers - 1))} className="w-8 h-8 flex items-center justify-center rounded-lg border border-teal-100 dark:border-teal-900 hover:bg-white/5 text-[#ffc174]">-</button>
@@ -302,7 +302,7 @@ export default function PlanTripPage() {
                       <button type="button" onClick={() => setTravelers(travelers + 1)} className="w-8 h-8 flex items-center justify-center rounded-lg border border-teal-100 dark:border-teal-900 hover:bg-white/5 text-[#ffc174]">+</button>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-[#f8fafc] rounded-xl border border-teal-50 dark:border-teal-900">
+                  <div className="flex items-center justify-between p-4 bg-[#f8fafc] dark:bg-slate-800/50 rounded-xl border border-teal-50 dark:border-teal-900">
                     <span className="font-semibold text-sm text-slate-900 dark:text-slate-100">Projected Cost</span>
                     <span className="bg-[#4fdbc8]/20 text-[#0f766e] px-4 py-1 rounded-full font-bold">₹{totalGroupBudget.toLocaleString('en-IN')}</span>
                   </div>
@@ -332,7 +332,7 @@ export default function PlanTripPage() {
                           setDaysMode("preset");
                           setPresetDays(e.target.value);
                         }
-                      }} className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 focus:border-[#ffc174] focus:ring-0 transition-all appearance-none outline-none">
+                      }} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 focus:border-[#ffc174] focus:ring-0 transition-all appearance-none outline-none">
                         <option value="3 Days">3 Days</option>
                         <option value="5 Days">5 Days</option>
                         <option value="7 Days">7 Days</option>
@@ -342,13 +342,13 @@ export default function PlanTripPage() {
                         <option value="custom">Custom...</option>
                       </select>
                       {daysMode === "custom" && (
-                        <input type="number" placeholder="Enter number of days" value={customDays} onChange={e => setCustomDays(e.target.value)} className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-900 dark:text-slate-100/20 focus:border-[#ffc174] focus:ring-0 transition-all outline-none" min="1" max="90" />
+                        <input type="number" placeholder="Enter number of days" value={customDays} onChange={e => setCustomDays(e.target.value)} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 placeholder:text-slate-900 dark:text-slate-100/20 focus:border-[#ffc174] focus:ring-0 transition-all outline-none" min="1" max="90" />
                       )}
                     </div>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">Travel Style</label>
-                    <select value={style} onChange={e => setStyle(e.target.value)} className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 focus:border-[#ffc174] focus:ring-0 transition-all appearance-none outline-none">
+                    <select value={style} onChange={e => setStyle(e.target.value)} className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 px-4 text-slate-900 dark:text-slate-100 focus:border-[#ffc174] focus:ring-0 transition-all appearance-none outline-none">
                       <option value="Luxury">Luxury</option>
                       <option value="Comfort">Comfort</option>
                       <option value="Boutique">Boutique</option>
@@ -392,8 +392,8 @@ export default function PlanTripPage() {
 
           {/* Right Column: Map Preview */}
           <div className="col-span-12 lg:col-span-4 sticky top-28">
-            <div className="bg-white/60 backdrop-blur-2xl rounded-3xl overflow-hidden border border-teal-100 dark:border-teal-900 h-[700px] flex flex-col shadow-2xl dark:shadow-none relative">
-              <div className="flex-grow relative bg-[#f0fdfa] overflow-hidden">
+            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl rounded-3xl overflow-hidden border border-teal-100 dark:border-teal-900 h-[700px] flex flex-col shadow-2xl dark:shadow-none relative">
+              <div className="flex-grow relative bg-[#f0fdfa] dark:bg-slate-900 overflow-hidden">
                 
                 {/* Embedded Map Widget */}
                 <div className="absolute inset-0 z-0">
@@ -407,14 +407,14 @@ export default function PlanTripPage() {
                    <div className="absolute top-1/3 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-10">
                       <div className="w-4 h-4 bg-[#ffc174] rounded-full animate-ping absolute"></div>
                       <div className="w-4 h-4 bg-[#ffc174] rounded-full relative shadow-[0_0_15px_rgba(255,193,116,1)]"></div>
-                      <span className="mt-2 bg-[#f8fafc] px-3 py-1 rounded-lg text-xs font-semibold border border-teal-100 dark:border-teal-900 text-slate-900 dark:text-slate-100">{destination}</span>
+                      <span className="mt-2 bg-[#f8fafc] dark:bg-slate-800 px-3 py-1 rounded-lg text-xs font-semibold border border-teal-100 dark:border-teal-900 text-slate-900 dark:text-slate-100">{destination}</span>
                    </div>
                 )}
 
                 {/* Wikipedia Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(12, 19, 36, 1) 0%, rgba(12, 19, 36, 0.7) 50%, rgba(12, 19, 36, 0) 100%)' }}>
                   {destInfo ? (
-                     <div className="flex gap-4 items-start pointer-events-auto bg-white/50 backdrop-blur-md p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-xl">
+                     <div className="flex gap-4 items-start pointer-events-auto bg-white/50 dark:bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-xl">
                         {destInfo.image && (
                            <img src={destInfo.image} className="w-20 h-20 rounded-xl object-cover border border-white/20 shadow-lg" alt={destination} />
                         )}

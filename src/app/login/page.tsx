@@ -45,9 +45,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0fdfa] text-slate-900 dark:text-slate-100 flex items-center justify-center font-sans relative px-4 overflow-hidden">
+    <div className="min-h-screen bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex items-center justify-center font-sans relative px-4 overflow-hidden">
       {/* Theme Toggle Button */}
-      <div className="absolute top-6 right-6 z-50 rounded-full bg-white/40 border border-teal-100 dark:border-teal-900 backdrop-blur-md shadow-lg shadow-[#ffc174]/10">
+      <div className="absolute top-6 right-6 z-50 rounded-full bg-white/40 dark:bg-slate-900/40 border border-teal-100 dark:border-teal-900 backdrop-blur-md shadow-lg shadow-[#ffc174]/10">
         <ThemeToggle />
       </div>
 
@@ -69,7 +69,7 @@ export default function LoginPage() {
         </div>
         
         {/* Main Card */}
-        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl dark:shadow-none relative overflow-hidden bg-[#f8fafc]/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900">
+        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl dark:shadow-none relative overflow-hidden bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900">
           {/* Decorative Accent */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffc174]/5 blur-3xl rounded-full"></div>
           
@@ -116,7 +116,7 @@ export default function LoginPage() {
               <div className="flex-grow border-t border-teal-100 dark:border-teal-900"></div>
             </div>
             
-            <button onClick={handleGoogleLogin} className="w-full h-14 bg-white/5 border border-teal-100 dark:border-teal-900 hover:bg-white/10 text-slate-900 dark:text-slate-100 text-sm font-semibold rounded-xl active:scale-95 transition-all duration-200 flex items-center justify-center gap-3" type="button">
+            <button onClick={handleGoogleLogin} className="w-full h-14 bg-white/5 border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 text-slate-900 dark:text-slate-100 text-sm font-semibold rounded-xl active:scale-95 transition-all duration-200 flex items-center justify-center gap-3" type="button">
               <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-1 .67-2.28 1.07-3.71 1.07-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>

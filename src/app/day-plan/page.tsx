@@ -249,7 +249,7 @@ export default function DayPlanPage() {
 
   if (isGenerating) {
     return (
-      <div className="min-h-screen bg-[#f0fdfa] flex flex-col items-center justify-center text-slate-900 dark:text-slate-100 p-4 relative">
+      <div className="min-h-screen bg-[#f0fdfa] dark:bg-slate-950 flex flex-col items-center justify-center text-slate-900 dark:text-slate-100 p-4 relative">
         <div className="z-10 flex flex-col items-center max-w-md w-full text-center space-y-8">
           <Loader2 className="w-16 h-16 text-[#0f766e] animate-spin" />
           <div>
@@ -262,8 +262,8 @@ export default function DayPlanPage() {
   }
 
   return (
-    <div className="bg-[#f8fafc] text-slate-900 dark:text-slate-100 min-h-screen pt-24 pb-12 px-4 sm:px-6 md:px-10 font-sans relative">
-      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-white/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm left-0 right-0">
+    <div className="bg-[#f8fafc] dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen pt-24 pb-12 px-4 sm:px-6 md:px-10 font-sans relative">
+      <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm left-0 right-0">
         <Link href="/" className="font-bold text-xl sm:text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
            <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-xl shadow-md" />
            NaviBharat
@@ -286,8 +286,8 @@ export default function DayPlanPage() {
                 <MapWidget sourceCoords={presentCoords} destCoords={cityCoords} />
              </div>
              <div className="absolute top-4 left-4 z-10 flex flex-col gap-2 pointer-events-none">
-                {presentCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#f59e0b] shadow-sm border border-[#f59e0b]/20">Present: {presentLocation}</span>}
-                {cityCoords && <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#0f766e] shadow-sm border border-[#0f766e]/20">Target: {city.split(',')[0]}</span>}
+                {presentCoords && <span className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#f59e0b] shadow-sm border border-[#f59e0b]/20">Present: {presentLocation}</span>}
+                {cityCoords && <span className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-bold text-[#0f766e] shadow-sm border border-[#0f766e]/20">Target: {city.split(',')[0]}</span>}
              </div>
           </div>
 
@@ -302,7 +302,7 @@ export default function DayPlanPage() {
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Present City</label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0f766e]" />
-                  <input type="text" value={presentCity} onChange={e => { setPresentCity(e.target.value); setShowPresentCityDropdown(true); }} placeholder="Which city are you currently in?" className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 focus:border-[#0f766e] outline-none" />
+                  <input type="text" value={presentCity} onChange={e => { setPresentCity(e.target.value); setShowPresentCityDropdown(true); }} placeholder="Which city are you currently in?" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 focus:border-[#0f766e] outline-none" />
                   {showPresentCityDropdown && presentCitySuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                       {presentCitySuggestions.map((sug, i) => (
@@ -323,7 +323,7 @@ export default function DayPlanPage() {
                   </button>
                 </div>
                 <div className="relative">
-                  <input type="text" value={presentLocation} onChange={e => { setPresentLocation(e.target.value); setShowPresentLocationDropdown(true); }} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-3 px-4 text-slate-800 dark:text-slate-100 focus:border-[#0f766e] outline-none" />
+                  <input type="text" value={presentLocation} onChange={e => { setPresentLocation(e.target.value); setShowPresentLocationDropdown(true); }} placeholder="e.g. Paharganj Hotel, or just 'Central'" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-3 px-4 text-slate-800 dark:text-slate-100 focus:border-[#0f766e] outline-none" />
                   {showPresentLocationDropdown && presentLocationSuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                       {presentLocationSuggestions.map((sug, i) => (
@@ -374,7 +374,7 @@ export default function DayPlanPage() {
                       }
                     }}
                     placeholderText="Select a date"
-                    className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 font-medium focus:border-[#0f766e] outline-none"
+                    className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 font-medium focus:border-[#0f766e] outline-none"
                     dateFormat="MMMM d, yyyy"
                     minDate={new Date()}
                   />
@@ -414,7 +414,7 @@ export default function DayPlanPage() {
             </div>
 
             {/* Chat Messages */}
-            <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] space-y-4">
+            <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] dark:bg-slate-900 space-y-4">
               <div className="flex justify-start">
                  <div className="bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 text-slate-700 px-5 py-4 rounded-3xl rounded-tl-sm max-w-[85%] shadow-sm text-base leading-relaxed">
                    {isLeftPanelComplete 
@@ -443,7 +443,7 @@ export default function DayPlanPage() {
 
             {/* Quick Replies */}
             {chatMessages.length > 0 && isLeftPanelComplete && (
-              <div className="px-4 py-3 bg-[#f8fafc] flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50 dark:border-teal-900">
+              <div className="px-4 py-3 bg-[#f8fafc] dark:bg-slate-900 flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50 dark:border-teal-900">
                 {['Budget: ₹2000', 'Half Day plan', 'Street Food spots', 'Skip Temples'].map(qr => (
                   <button key={qr} type="button" onClick={() => setCurrentInput(qr)} className="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-full text-sm font-bold text-[#0f766e] hover:bg-teal-50 dark:bg-teal-900/30 shadow-sm transition-colors">
                     {qr}
@@ -455,12 +455,12 @@ export default function DayPlanPage() {
             {/* Chat Input */}
             <div className="p-4 bg-white dark:bg-slate-900 border-t border-teal-50 dark:border-teal-900 relative">
               {!isLeftPanelComplete && (
-                <div className="absolute inset-0 z-20 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                <div className="absolute inset-0 z-20 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm flex items-center justify-center">
                   <span className="text-sm font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 px-4 py-2 rounded-full shadow-sm border border-slate-200 dark:border-slate-700">Fill the left panel to unlock chat</span>
                 </div>
               )}
               <form onSubmit={handleSendMessage} className="relative">
-                <input type="text" value={currentInput} onChange={e => setCurrentInput(e.target.value)} placeholder="Type a message..." className="w-full bg-[#f0fdfa] border border-teal-100 dark:border-teal-900 rounded-full py-3 pl-4 pr-12 text-sm focus:border-[#0f766e] outline-none" />
+                <input type="text" value={currentInput} onChange={e => setCurrentInput(e.target.value)} placeholder="Type a message..." className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-full py-3 pl-4 pr-12 text-sm focus:border-[#0f766e] outline-none" />
                 <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-[#0f766e] text-white rounded-full flex items-center justify-center hover:bg-[#0d9488] transition-colors">
                   <Send className="w-4 h-4 ml-0.5" />
                 </button>
@@ -469,7 +469,7 @@ export default function DayPlanPage() {
             
             {/* Absolute Overlay if City not selected */}
             {!city && (
-               <div className="absolute inset-0 bg-white/60 backdrop-blur-sm z-10 flex items-center justify-center">
+               <div className="absolute inset-0 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm z-10 flex items-center justify-center">
                  <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl border border-teal-100 dark:border-teal-900 text-center">
                     <Compass className="w-8 h-8 text-[#f59e0b] mx-auto mb-2" />
                     <p className="font-bold text-slate-700">Select a destination city to start chatting!</p>

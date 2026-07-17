@@ -25,7 +25,7 @@ export default function DayItineraryPage() {
     window.print();
   };
 
-  if (!dayPlan) return <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">Loading...</div>;
+  if (!dayPlan) return <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-900 flex items-center justify-center">Loading...</div>;
 
   const renderTransitIcon = (mode: string) => {
     const m = mode.toLowerCase();
@@ -41,10 +41,10 @@ export default function DayItineraryPage() {
   };
 
   return (
-    <div className="bg-[#f8fafc] min-h-screen text-slate-900 dark:text-slate-100 font-sans pb-20">
+    <div className="bg-[#f8fafc] dark:bg-slate-900 min-h-screen text-slate-900 dark:text-slate-100 font-sans pb-20">
       
       {/* Nav */}
-      <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm print:hidden">
+      <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm print:hidden">
         <button onClick={() => router.push("/day-plan")} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-[#0f766e] font-semibold transition-colors">
           <ArrowLeft className="w-5 h-5" /> Back to Planner
         </button>
@@ -84,7 +84,7 @@ export default function DayItineraryPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {dayPlan.top_3_places.map((place: any, i: number) => (
-                <div key={i} className="bg-white/80 rounded-2xl p-5 border border-amber-100 shadow-sm relative">
+                <div key={i} className="bg-white/80 dark:bg-slate-900/80 rounded-2xl p-5 border border-amber-100 shadow-sm relative">
                   <div className="absolute -top-3 -left-3 w-8 h-8 bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
                     {i + 1}
                   </div>

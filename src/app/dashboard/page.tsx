@@ -123,7 +123,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="bg-[#f0fdfa] text-slate-900 dark:text-slate-100 min-h-screen font-sans selection:bg-[#ffc174]/30 overflow-x-hidden">
+    <div className="bg-[#f0fdfa] dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen font-sans selection:bg-[#ffc174]/30 overflow-x-hidden">
       <ActionModal
         isOpen={modalState.isOpen}
         type={modalState.type}
@@ -138,11 +138,11 @@ export default function DashboardPage() {
       {/* 3D Background Image */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <img src="/3d_india_dashboard.png" alt="3D Neon India Dashboard" className="w-full h-full object-cover opacity-30 mix-blend-screen" />
-        <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px]"></div>
+        <div className="absolute inset-0 bg-white/60 dark:bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-[1px]"></div>
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-10 py-4 bg-white/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-lg shadow-[#ffc174]/10">
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-10 py-4 bg-white/60 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-lg shadow-[#ffc174]/10">
         <Link href="/" className="flex items-center gap-2 group">
           <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-lg shadow-sm group-hover:scale-105 transition-transform" />
           <span className="text-2xl font-bold bg-gradient-to-r from-[#ffc174] to-[#d97706] bg-clip-text text-transparent tracking-tight">NaviBharat</span>
@@ -193,7 +193,7 @@ export default function DashboardPage() {
             </h2>
             <div className="relative w-full md:w-72">
               <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-600 dark:text-slate-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" placeholder="Search trips..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-600 dark:text-slate-300/50 focus:outline-none focus:border-[#ffc174]/50 transition-colors shadow-inner" />
+              <input type="text" placeholder="Search trips..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-[#f8fafc] dark:bg-slate-800 backdrop-blur-md border border-teal-100 dark:border-teal-900 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-600 dark:text-slate-300/50 focus:outline-none focus:border-[#ffc174]/50 transition-colors shadow-inner" />
             </div>
           </div>
 
@@ -206,13 +206,13 @@ export default function DashboardPage() {
                 <p className="text-xl text-slate-600 dark:text-slate-300 font-medium">Fetching your planned journeys...</p>
               </div>
             ) : trips.length === 0 ? (
-               <div className="col-span-full py-16 text-center text-slate-600 dark:text-slate-300 font-medium text-xl bg-white/40 rounded-3xl border border-dashed border-white/20 backdrop-blur-md">
+               <div className="col-span-full py-16 text-center text-slate-600 dark:text-slate-300 font-medium text-xl bg-white/40 dark:bg-slate-800/50 rounded-3xl border border-dashed border-white/20 dark:border-slate-700 backdrop-blur-md">
                  You haven't planned any trips yet. <br/>
                  <span className="text-[#f59e0b] mt-2 block">Click 'Plan New Trip' to start exploring!</span>
                </div>
             ) : (
               trips.filter(t => t.destination.toLowerCase().includes(searchTerm.toLowerCase())).map((trip) => (
-                <div key={trip.id} className="group relative backdrop-blur-xl bg-white/40 border border-teal-100 dark:border-teal-900 rounded-2xl p-1 hover:border-[#ffc174]/40 hover:bg-white/60 hover:-translate-y-1 hover:shadow-2xl dark:shadow-none hover:shadow-[#ffc174]/10 transition-all duration-500 overflow-hidden">
+                <div key={trip.id} className="group relative backdrop-blur-xl bg-white/40 dark:bg-slate-900/40 dark:bg-slate-800/40 border border-teal-100 dark:border-teal-900 rounded-2xl p-1 hover:border-[#ffc174]/40 hover:bg-white/60 dark:hover:bg-slate-800/60 dark:bg-slate-900/60 dark:hover:bg-slate-800/60 hover:-translate-y-1 hover:shadow-2xl dark:shadow-none hover:shadow-[#ffc174]/10 transition-all duration-500 overflow-hidden">
                   <div className="h-48 relative overflow-hidden bg-white dark:bg-slate-900 rounded-t-2xl">
                     <DestinationImage destination={trip.destination} />
                     <div className="absolute top-4 right-4 z-20">
@@ -231,7 +231,7 @@ export default function DashboardPage() {
                       <div className="flex-1 px-2 flex flex-col items-center">
                         <svg className="text-slate-600 dark:text-slate-300 w-5 h-5 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.7l-1.2 3.3c-.2.6.2 1.2.8 1.3l5.7 1.5 2.5 7.5c.2.5.6.8 1.2.7l3.3-1.2c.5-.2.8-.6.7-1.1z"/><path d="M3 21h18"/></svg>
                         <div className="w-full border-t border-dashed border-white/20 relative">
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#f0fdfa] px-2 rounded-full text-[#ffc174]">
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#f0fdfa] dark:bg-slate-800 px-2 rounded-full text-[#ffc174]">
                              <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m19 9-7-4-7 4"/><path d="m21 13-9-5-9 5"/><path d="m23 17-11-6-11 6"/></svg>
                           </div>
                         </div>
@@ -279,7 +279,7 @@ export default function DashboardPage() {
             
             {/* New Journey Card (Empty State Style) */}
             <Link href="/plan" className="block focus:outline-none">
-              <div className="h-full min-h-[420px] backdrop-blur-xl bg-white/40 border-2 border-dashed border-teal-100 dark:border-teal-900 rounded-2xl flex flex-col items-center justify-center p-12 text-center group cursor-pointer hover:border-[#ffc174]/50 hover:bg-white/80 transition-all duration-500 shadow-lg">
+              <div className="h-full min-h-[420px] backdrop-blur-xl bg-white/40 dark:bg-slate-900/40 dark:bg-slate-800/40 border-2 border-dashed border-teal-100 dark:border-teal-900 rounded-2xl flex flex-col items-center justify-center p-12 text-center group cursor-pointer hover:border-[#ffc174]/50 hover:bg-white/80 dark:hover:bg-slate-800/80 dark:bg-slate-900/80 dark:hover:bg-slate-800/80 transition-all duration-500 shadow-lg">
                 <div className="w-24 h-24 mb-6 relative flex items-center justify-center">
                   <div className="absolute inset-0 bg-[#ffc174]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <svg className="w-16 h-16 text-[#ffc174] relative z-10 group-hover:rotate-180 transition-transform duration-1000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
