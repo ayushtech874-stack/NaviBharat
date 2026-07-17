@@ -345,11 +345,11 @@ export default function DayPlanPage() {
                 </div>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f59e0b]" />
-                  <input type="text" value={city} onChange={e => { setCity(e.target.value); setShowCityDropdown(true); }} placeholder="Where do you want to travel?" className="w-full bg-[#fffbef] border border-amber-200 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 focus:border-[#f59e0b] outline-none" />
+                  <input type="text" value={city} onChange={e => { setCity(e.target.value); setShowCityDropdown(true); }} placeholder="Where do you want to travel?" className="w-full bg-[#fffbef] dark:bg-slate-800 border border-amber-200 dark:border-amber-900/50 rounded-xl py-3 pl-10 pr-4 text-slate-800 dark:text-slate-100 focus:border-[#f59e0b] outline-none" />
                   {showCityDropdown && citySuggestions.length > 0 && (
-                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-amber-100 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
+                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-amber-100 dark:border-slate-800 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                       {citySuggestions.map((sug, i) => (
-                        <div key={i} className="px-4 py-3 hover:bg-amber-50 cursor-pointer text-sm text-slate-700 border-b border-amber-50 last:border-none" onClick={() => { setSelectedCity(true); setCity(sug.display_name); setShowCityDropdown(false); }}>
+                        <div key={i} className="px-4 py-3 hover:bg-amber-50 dark:hover:bg-slate-800 cursor-pointer text-sm text-slate-700 dark:text-slate-100 border-b border-amber-50 dark:border-slate-800 last:border-none" onClick={() => { setSelectedCity(true); setCity(sug.display_name); setShowCityDropdown(false); }}>
                            {sug.display_name}
                         </div>
                       ))}
