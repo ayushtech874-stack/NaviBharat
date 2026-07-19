@@ -365,16 +365,19 @@ export default function PlanTripPage() {
                      <span className="text-xs text-slate-600 dark:text-slate-300">{preferences.length}/4 selected</span>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    {preferencesOptions.map(pref => {
+                    {Array.from(new Set([...preferencesOptions, ...preferences])).map(pref => {
                        const isActive = preferences.includes(pref);
                        return (
                           <button 
                              key={pref} 
                              type="button" 
                              onClick={() => togglePreference(pref)}
-                             className={`px-6 py-2 rounded-full font-bold transition-all ${isActive ? 'bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white shadow-lg shadow-[#f59e0b]/20' : 'border border-teal-100 dark:border-teal-900 hover:border-[#4fdbc8] hover:text-[#0f766e] text-slate-900 dark:text-slate-100'}`}
+                             className={`px-6 py-2 rounded-full font-bold transition-all flex items-center gap-2 ${isActive ? 'bg-gradient-to-r from-[#f59e0b] to-[#d97706] text-white shadow-lg shadow-[#f59e0b]/20' : 'border border-teal-100 dark:border-teal-900 hover:border-[#4fdbc8] hover:text-[#0f766e] text-slate-900 dark:text-slate-100'}`}
                           >
                              {pref}
+                             {isActive && !preferencesOptions.includes(pref) && (
+                               <span className="text-xs opacity-70 hover:opacity-100 bg-black/20 rounded-full w-4 h-4 flex items-center justify-center">✕</span>
+                             )}
                           </button>
                        )
                     })}
