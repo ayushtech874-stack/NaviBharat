@@ -27,7 +27,7 @@ User Request: "${prompt}"`;
     try {
       const chatCompletion = await groq.chat.completions.create({
         messages: [{ role: 'user', content: sysPrompt }],
-        model: "llama3-70b-8192",
+        model: "llama-3.1-70b-versatile",
         temperature: 0.5,
         max_tokens: 5000,
         response_format: { type: "json_object" }
