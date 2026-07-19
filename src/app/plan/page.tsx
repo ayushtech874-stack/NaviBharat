@@ -378,19 +378,35 @@ export default function PlanTripPage() {
                           </button>
                        )
                     })}
-                    <input 
-                      type="text" 
-                      placeholder="+ Custom Vibe" 
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          const val = e.currentTarget.value.trim();
+                    <div className="flex items-center gap-2">
+                      <input 
+                        id="customVibeInput"
+                        type="text" 
+                        placeholder="Custom Vibe" 
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            const val = e.currentTarget.value.trim();
+                            if (val && !preferences.includes(val)) togglePreference(val);
+                            e.currentTarget.value = '';
+                          }
+                        }}
+                        className="px-6 py-2 rounded-full border border-teal-100 dark:border-teal-900 bg-transparent text-slate-900 dark:text-slate-100 outline-none focus:border-[#ffc174] placeholder:text-slate-500"
+                      />
+                      <button 
+                        type="button"
+                        onClick={() => {
+                          const input = document.getElementById('customVibeInput') as HTMLInputElement;
+                          const val = input?.value.trim();
                           if (val && !preferences.includes(val)) togglePreference(val);
-                          e.currentTarget.value = '';
-                        }
-                      }}
-                      className="px-6 py-2 rounded-full border border-teal-100 dark:border-teal-900 bg-transparent text-slate-900 dark:text-slate-100 outline-none focus:border-[#ffc174] placeholder:text-slate-500"
-                    />
+                          if (input) input.value = '';
+                        }}
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#f59e0b] text-white font-bold hover:scale-105 transition-transform shadow-md"
+                        title="Add Custom Vibe"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
 
