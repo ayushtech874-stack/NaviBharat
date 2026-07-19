@@ -15,6 +15,7 @@ export async function POST(req: Request) {
 
     const sysPrompt = `You are an AI travel assistant. You are given a current detailed JSON itinerary and a user's prompt asking to tweak or adjust it (e.g. swap an activity, change a restaurant).
 You MUST respond ONLY with the newly adjusted JSON object matching the EXACT same structure as the current itinerary.
+Even if the user asks a question (like "where is the 3rd day plan"), you MUST STILL output the entire valid JSON itinerary, possibly appending the missing day or addressing their question by modifying the itinerary.
 Do not output any markdown code blocks, explanations, or conversational text. ONLY output the valid JSON payload.
 
 Current Itinerary:
@@ -28,6 +29,7 @@ User Request: "${prompt}"`;
         messages: [{ role: 'user', content: sysPrompt }],
         model: "llama3-70b-8192",
         temperature: 0.5,
+        max_tokens: 5000,
         response_format: { type: "json_object" }
       });
 

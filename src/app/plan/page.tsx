@@ -26,7 +26,7 @@ export default function PlanTripPage() {
 
   const [budget, setBudget] = useState([65000]); // Per Head Budget
   const [travelers, setTravelers] = useState(2);
-  const [preferences, setPreferences] = useState<string[]>(["Adventure"]);
+  const [preferences, setPreferences] = useState<string[]>([]);
   const [style, setStyle] = useState("Standard");
 
   // Geolocation & Wiki State
@@ -361,7 +361,7 @@ export default function PlanTripPage() {
                 {/* The Vibe */}
                 <div>
                   <div className="flex justify-between items-end mb-4">
-                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">The Vibe</label>
+                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">The Vibe (Optional)</label>
                      <span className="text-xs text-slate-600 dark:text-slate-300">{preferences.length}/4 selected</span>
                   </div>
                   <div className="flex flex-wrap gap-3">
@@ -378,6 +378,19 @@ export default function PlanTripPage() {
                           </button>
                        )
                     })}
+                    <input 
+                      type="text" 
+                      placeholder="+ Custom Vibe" 
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const val = e.currentTarget.value.trim();
+                          if (val && !preferences.includes(val)) togglePreference(val);
+                          e.currentTarget.value = '';
+                        }
+                      }}
+                      className="px-6 py-2 rounded-full border border-teal-100 dark:border-teal-900 bg-transparent text-slate-900 dark:text-slate-100 outline-none focus:border-[#ffc174] placeholder:text-slate-500"
+                    />
                   </div>
                 </div>
 
