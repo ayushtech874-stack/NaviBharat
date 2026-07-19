@@ -55,6 +55,7 @@ Travel Style: ${travel_style || 'Standard'}
 ${knownPlacesContext}
 
 RULES:
+- CRITICAL: You MUST generate EXACTLY ${days || 3} days in the itinerary array. No more, no less. If the user asks for 3 days, you must generate Day 1, Day 2, and Day 3.
 - ANTI-HALLUCINATION STRICT RULE: DO NOT invent, hallucinate, or make up any places, restaurants, or hotels. ALL locations mentioned MUST be real, verifiable, and currently existing places in the specific destination city. If you do not know enough real places to fill the itinerary, space out the activities or explicitly say "Free time" instead of creating fake names.
 - PRIORITIZE KNOWN PLACES when relevant (use Avg visit cost for entry_fees/food).
 - PACK EACH DAY with approximately 12 HOURS of engaging activities (usually 4-6 distinct places/events) to ensure a full day of travel.
@@ -113,6 +114,7 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
         messages: [{ role: 'user', content: prompt }],
         model: "llama3-70b-8192",
         temperature: 0.7,
+        max_tokens: 5000,
         response_format: { type: "json_object" }
       });
 
