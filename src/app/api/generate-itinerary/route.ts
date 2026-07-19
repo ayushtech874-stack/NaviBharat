@@ -112,7 +112,7 @@ You MUST respond ONLY with a valid JSON object matching the exact structure belo
     try {
       const chatCompletion = await groq.chat.completions.create({
         messages: [{ role: 'user', content: prompt }],
-        model: "llama-3.1-70b-versatile",
+        model: "llama-3.3-70b-versatile",
         temperature: 0.7,
         max_tokens: 5000,
         response_format: { type: "json_object" }
