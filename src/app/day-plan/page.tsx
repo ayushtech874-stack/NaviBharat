@@ -306,7 +306,7 @@ export default function DayPlanPage() {
                   {showPresentCityDropdown && presentCitySuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                       {presentCitySuggestions.map((sug, i) => (
-                        <div key={i} className="px-4 py-3 hover:bg-teal-50 dark:bg-teal-900/30 cursor-pointer text-sm text-slate-700 border-b border-teal-50 dark:border-teal-900 last:border-none" onClick={() => { setSelectedPresentCity(true); setPresentCity(sug.display_name); setShowPresentCityDropdown(false); }}>
+                        <div key={i} className="px-4 py-3 hover:bg-teal-50 dark:hover:bg-slate-800 cursor-pointer text-sm text-slate-700 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none" onClick={() => { setSelectedPresentCity(true); setPresentCity(sug.display_name); setShowPresentCityDropdown(false); }}>
                            {sug.display_name}
                         </div>
                       ))}
@@ -327,7 +327,7 @@ export default function DayPlanPage() {
                   {showPresentLocationDropdown && presentLocationSuggestions.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                       {presentLocationSuggestions.map((sug, i) => (
-                        <div key={i} className="px-4 py-3 hover:bg-teal-50 dark:bg-teal-900/30 cursor-pointer text-sm text-slate-700 border-b border-teal-50 dark:border-teal-900 last:border-none" onClick={() => { setSelectedPresentLocation(true); setPresentLocation(sug.display_name); setShowPresentLocationDropdown(false); }}>
+                        <div key={i} className="px-4 py-3 hover:bg-teal-50 dark:hover:bg-slate-800 cursor-pointer text-sm text-slate-700 dark:text-slate-100 border-b border-teal-50 dark:border-teal-900 last:border-none" onClick={() => { setSelectedPresentLocation(true); setPresentLocation(sug.display_name); setShowPresentLocationDropdown(false); }}>
                            {sug.display_name}
                         </div>
                       ))}
@@ -445,7 +445,7 @@ export default function DayPlanPage() {
             {chatMessages.length > 0 && isLeftPanelComplete && (
               <div className="px-4 py-3 bg-[#f8fafc] dark:bg-slate-900 flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50 dark:border-teal-900">
                 {['Budget: ₹2000', 'Half Day plan', 'Street Food spots', 'Skip Temples'].map(qr => (
-                  <button key={qr} type="button" onClick={() => setCurrentInput(qr)} className="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-full text-sm font-bold text-[#0f766e] hover:bg-teal-50 dark:bg-teal-900/30 shadow-sm transition-colors">
+                  <button key={qr} type="button" onClick={() => setCurrentInput(qr)} className="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-full text-sm font-bold text-[#0f766e] dark:text-[#4fdbc8] hover:bg-teal-50 dark:hover:bg-teal-900/50 shadow-sm transition-colors">
                     {qr}
                   </button>
                 ))}

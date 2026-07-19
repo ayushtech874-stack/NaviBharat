@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from "groq-sdk";
 import { v4 as uuidv4 } from 'uuid';
 
 export const maxDuration = 60;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
 
 export async function POST(req: Request) {
   try {
@@ -29,30 +29,28 @@ CRITICAL INSTRUCTIONS:
 5. PRIORITY ON UNDERRATED GEMS: Actively guide the user away from mainstream social media traps and suggest deeply localized, highly underrated spots.
 6. Keep your replies concise, enthusiastic, and highly localized.`;
 
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
-        systemInstruction: systemInstruction 
-    });
-
     const latestUserMsg = messages[messages.length - 1];
     const previousMessages = messages.slice(0, messages.length - 1);
     
-    // Map frontend 'ai' role to 'model'
     const formattedHistory = previousMessages.map((m: any) => ({
-      role: m.role === 'ai' || m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
+      role: m.role === 'ai' || m.role === 'assistant' ? 'assistant' : 'user',
+      content: m.content
     }));
 
-    const chat = model.startChat({
-        history: formattedHistory,
-        generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-        }
+    const allMessages = [
+        { role: 'system', content: systemInstruction },
+        ...formattedHistory,
+        { role: 'user', content: latestUserMsg.content }
+    ];
+
+    const chatCompletion = await groq.chat.completions.create({
+        messages: allMessages,
+        model: "llama3-70b-8192",
+        temperature: 0.7,
+        max_tokens: 500,
     });
 
-    const result = await chat.sendMessage(latestUserMsg.content);
-    const reply = result.response.text();
+    const reply = chatCompletion.choices[0]?.message?.content || "";
 
     return NextResponse.json({ reply, sessionId: session }, { status: 200 });
 

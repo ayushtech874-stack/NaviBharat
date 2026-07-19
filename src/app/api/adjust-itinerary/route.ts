@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from "groq-sdk";
 
 export const maxDuration = 60;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
 
 export async function POST(req: Request) {
   try {

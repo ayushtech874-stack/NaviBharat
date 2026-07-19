@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import Groq from "groq-sdk";
 
 export const maxDuration = 60;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'default');
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'default' });
 
 export async function POST(req: Request) {
   try {
@@ -62,19 +62,14 @@ Output strictly valid JSON matching this schema:
   ]
 }`;
 
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: "llama3-70b-8192",
+      temperature: 0.7,
+      response_format: { type: "json_object" }
     });
 
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json",
-        temperature: 0.7,
-      }
-    });
-
-    let content = result.response.text() || '{}';
+    let content = chatCompletion.choices[0]?.message?.content || '{}';
     
     // In case there's any markdown wrapping around JSON
     const jsonStart = content.indexOf('{');
