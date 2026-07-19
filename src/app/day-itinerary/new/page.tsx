@@ -25,7 +25,7 @@ export default function DayItineraryPage() {
     window.print();
   };
 
-  if (!dayPlan) return <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-900 flex items-center justify-center">Loading...</div>;
+  if (!dayPlan) return <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0f172a] flex items-center justify-center">Loading...</div>;
 
   const renderTransitIcon = (mode: string) => {
     const m = mode.toLowerCase();
@@ -41,7 +41,7 @@ export default function DayItineraryPage() {
   };
 
   return (
-    <div className="bg-[#f8fafc] dark:bg-slate-900 min-h-screen text-slate-900 dark:text-slate-100 font-sans pb-20">
+    <div className="bg-[#f8fafc] dark:bg-[#0f172a] min-h-screen text-slate-900 dark:text-slate-100 font-sans pb-20">
       
       {/* Nav */}
       <nav className="sticky top-0 w-full z-50 flex justify-between items-center px-6 h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm print:hidden">

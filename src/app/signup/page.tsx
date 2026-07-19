@@ -69,7 +69,7 @@ export default function SignupPage() {
       {/* Main Content Container */}
       <main className="w-full max-w-[480px] px-4 md:px-0 z-10 my-12">
         {/* Signup Shell */}
-        <div className="bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 md:p-10 flex flex-col items-center shadow-2xl dark:shadow-none">
+        <div className="bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 md:p-10 flex flex-col items-center shadow-2xl dark:shadow-none">
           {/* Brand Identity */}
           <div className="mb-8 flex flex-col items-center gap-2">
             <Link href="/" className="flex flex-col items-center group cursor-pointer">

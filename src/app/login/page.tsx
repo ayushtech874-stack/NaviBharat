@@ -69,7 +69,7 @@ export default function LoginPage() {
         </div>
         
         {/* Main Card */}
-        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl dark:shadow-none relative overflow-hidden bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900">
+        <div className="rounded-[2rem] p-8 md:p-10 shadow-2xl dark:shadow-none relative overflow-hidden bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-2xl border border-teal-100 dark:border-teal-900">
           {/* Decorative Accent */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffc174]/5 blur-3xl rounded-full"></div>
           

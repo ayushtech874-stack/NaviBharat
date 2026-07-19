@@ -262,7 +262,7 @@ export default function DayPlanPage() {
   }
 
   return (
-    <div className="bg-[#f8fafc] dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen pt-24 pb-12 px-4 sm:px-6 md:px-10 font-sans relative">
+    <div className="bg-[#f8fafc] dark:bg-[#0f172a] text-slate-900 dark:text-slate-100 min-h-screen pt-24 pb-12 px-4 sm:px-6 md:px-10 font-sans relative">
       <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-4 sm:px-6 md:px-10 h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm left-0 right-0">
         <Link href="/" className="font-bold text-xl sm:text-2xl text-[#f59e0b] tracking-tight flex items-center gap-2">
            <img src="/logo-v2.png" alt="NaviBharat Logo" className="w-8 h-8 rounded-xl shadow-md" />
@@ -414,7 +414,7 @@ export default function DayPlanPage() {
             </div>
 
             {/* Chat Messages */}
-            <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] dark:bg-slate-900 space-y-4">
+            <div className="flex-grow p-6 overflow-y-auto bg-[#f8fafc] dark:bg-[#0f172a] space-y-4">
               <div className="flex justify-start">
                  <div className="bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 text-slate-700 px-5 py-4 rounded-3xl rounded-tl-sm max-w-[85%] shadow-sm text-base leading-relaxed">
                    {isLeftPanelComplete 
@@ -443,7 +443,7 @@ export default function DayPlanPage() {
 
             {/* Quick Replies */}
             {chatMessages.length > 0 && isLeftPanelComplete && (
-              <div className="px-4 py-3 bg-[#f8fafc] dark:bg-slate-900 flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50 dark:border-teal-900">
+              <div className="px-4 py-3 bg-[#f8fafc] dark:bg-[#0f172a] flex gap-2 overflow-x-auto no-scrollbar border-t border-teal-50 dark:border-teal-900">
                 {['Budget: ₹2000', 'Half Day plan', 'Street Food spots', 'Skip Temples'].map(qr => (
                   <button key={qr} type="button" onClick={() => setCurrentInput(qr)} className="whitespace-nowrap px-4 py-2 bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900 rounded-full text-sm font-bold text-[#0f766e] dark:text-[#4fdbc8] hover:bg-teal-50 dark:hover:bg-teal-900/50 shadow-sm transition-colors">
                     {qr}

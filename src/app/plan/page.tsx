@@ -249,7 +249,7 @@ export default function PlanTripPage() {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">Origin</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffc174] shadow-[0_0_8px_rgba(255,193,116,0.6)]"></span>
-                      <input required type="text" value={source} onChange={e => { setSource(e.target.value); setShowSourceDropdown(true); }} placeholder="e.g. New Delhi, India" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#ffc174] focus:ring-0 transition-all outline-none shadow-inner" />
+                      <input required type="text" value={source} onChange={e => { setSource(e.target.value); setShowSourceDropdown(true); }} placeholder="e.g. New Delhi, India" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#ffc174] focus:ring-0 transition-all outline-none shadow-inner" />
                       {showSourceDropdown && sourceSuggestions.length > 0 && (
                         <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                           {sourceSuggestions.map((sug, idx) => (
@@ -273,7 +273,7 @@ export default function PlanTripPage() {
                     <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2 uppercase tracking-wider">Destination</label>
                     <div className="relative">
                       <span className="absolute left-4 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#4fdbc8] shadow-[0_0_8px_rgba(79,219,200,0.6)]"></span>
-                      <input required type="text" value={destination} onChange={e => { setDestination(e.target.value); setShowDestDropdown(true); }} placeholder="Where to?" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#4fdbc8] focus:ring-0 transition-all outline-none shadow-inner" />
+                      <input required type="text" value={destination} onChange={e => { setDestination(e.target.value); setShowDestDropdown(true); }} placeholder="Where to?" className="w-full bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl py-4 pl-10 pr-4 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:border-[#4fdbc8] focus:ring-0 transition-all outline-none shadow-inner" />
                       {showDestDropdown && destSuggestions.length > 0 && (
                         <div className="absolute z-50 w-full mt-2 bg-[#f8fafc] dark:bg-slate-800 border border-teal-100 dark:border-teal-900 rounded-xl shadow-2xl dark:shadow-none max-h-60 overflow-y-auto">
                           {destSuggestions.map((sug, idx) => (

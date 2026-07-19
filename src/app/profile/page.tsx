@@ -159,7 +159,7 @@ export default function ProfilePage() {
       />
 
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-lg shadow-[#f59e0b]/5">
+      <nav className="fixed top-0 w-full z-50 bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-lg shadow-[#f59e0b]/5">
         <div className="flex justify-between items-center px-6 md:px-10 h-20 w-full max-w-[1280px] mx-auto">
           <div className="flex items-center gap-8">
             <Link href="/" className="font-bold text-2xl md:text-3xl tracking-tight text-[#ffc174] cursor-pointer active:scale-95 transition-transform flex items-center gap-2">
@@ -187,7 +187,7 @@ export default function ProfilePage() {
         </nav>
 
         {/* Hero Card */}
-        <section className="bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 md:p-12 mb-12 relative overflow-hidden shadow-[0_0_40px_-10px_rgba(245,158,11,0.3)]">
+        <section className="bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-3xl p-8 md:p-12 mb-12 relative overflow-hidden shadow-[0_0_40px_-10px_rgba(245,158,11,0.3)]">
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#ffc174]/20 blur-[100px] rounded-full"></div>
           <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#4fdbc8]/20 blur-[100px] rounded-full"></div>
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -223,7 +223,7 @@ export default function ProfilePage() {
         {/* Edit Form Area Grid */}
         <form onSubmit={handleSave} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Personal Information Card */}
-          <div className="bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-2xl p-8 shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)]">
+          <div className="bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-2xl p-8 shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)]">
             <div className="flex items-center gap-3 mb-8">
               <svg className="text-[#0f766e] w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Personal Information</h2>
@@ -266,7 +266,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Occupation & Biography Card */}
-          <div className="bg-[#f8fafc] dark:bg-slate-900/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-2xl p-8 shadow-[0_0_40px_-10px_rgba(245,158,11,0.3)] h-full">
+          <div className="bg-[#f8fafc] dark:bg-[#0f172a]/60 backdrop-blur-xl border border-teal-100 dark:border-teal-900 rounded-2xl p-8 shadow-[0_0_40px_-10px_rgba(245,158,11,0.3)] h-full">
             <div className="flex items-center gap-3 mb-8">
               <svg className="text-[#ffc174] w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
               <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Occupation &amp; Biography</h2>

@@ -386,13 +386,13 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
       />
       
       {/* Top Navigation Bar */}
-      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10 py-4 bg-white/60 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm transition-all duration-300" id="headerNav">
+      <header className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-10 py-4 bg-white/80 dark:bg-slate-950/90 backdrop-blur-xl border-b border-teal-100 dark:border-teal-900 shadow-sm transition-all duration-300" id="headerNav">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.back()} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm text-[#ffc174] font-semibold text-sm">
+          <button onClick={() => router.back()} className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm text-[#ffc174] font-semibold text-sm">
             <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
             <span className="hidden sm:inline">Back</span>
           </button>
-          <Link href="/dashboard" className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm text-slate-900 dark:text-slate-100 font-semibold text-sm">
+          <Link href="/dashboard" className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm text-slate-900 dark:text-slate-100 font-semibold text-sm">
             <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
@@ -403,11 +403,11 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
         </div>
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <button onClick={handleDownloadPdf} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm">
+          <button onClick={handleDownloadPdf} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm">
             <Download size={18} className="text-slate-900 dark:text-slate-100" />
             <span className="font-semibold text-sm">Download PDF</span>
           </button>
-          <button onClick={handleShare} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm">
+          <button onClick={handleShare} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 hover:bg-white/10 dark:hover:bg-slate-800/10 transition-colors shadow-sm">
             <Share2 size={18} className="text-slate-900 dark:text-slate-100" />
           </button>
         </div>
@@ -439,7 +439,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
       {/* Sticky Tab Bar */}
       <nav className="sticky top-[72px] z-40 px-4 md:px-10 bg-[#f0fdfa]/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-teal-50 dark:border-teal-900 py-4">
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-1 rounded-2xl shadow-sm overflow-x-auto w-full md:w-auto">
+          <div className="flex items-center gap-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-1 rounded-2xl shadow-sm overflow-x-auto w-full md:w-auto">
             <button onClick={() => setActiveTab("timeline")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'timeline' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Timeline</button>
             <button onClick={() => setActiveTab("overview")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'overview' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Overview</button>
             <button onClick={() => setActiveTab("budget")} className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all shrink-0 ${activeTab === 'budget' ? 'bg-gradient-to-r from-[#d97706] to-[#f59e0b] text-white shadow-lg shadow-[#d97706]/20 scale-105' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}>Costs</button>
@@ -515,7 +515,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                                  <div className={`absolute -left-[41px] md:-left-[57px] top-4 w-6 h-6 rounded-full border-4 border-[#020617] ${scheme.dot} z-10 group-hover:scale-125 transition-transform duration-300`}></div>
                                  
                                  {/* Card */}
-                                 <div className={`bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-2xl ${scheme.glow} transition-all duration-300`}>
+                                 <div className={`bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-2xl ${scheme.glow} transition-all duration-300`}>
                                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
                                        <div className="flex items-center gap-3">
                                           <span className={`px-3 py-1 rounded-lg ${scheme.badgeBg} ${scheme.badgeText} text-sm font-semibold capitalize flex items-center gap-1.5`}>
@@ -537,7 +537,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                                     </p>
                                     
                                     {activity.historical_significance && (
-                                       <div className="p-4 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/10 flex gap-4">
+                                       <div className="p-4 rounded-xl bg-[#f59e0b]/10 dark:bg-slate-950/50 border border-[#f59e0b]/20 flex gap-4">
                                           <Sparkles size={20} className="text-[#ffb95f] shrink-0 mt-0.5" />
                                           <div>
                                              <span className="text-sm font-semibold text-[#ffc174] block mb-1">Did you know?</span>
@@ -562,7 +562,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
 
           {activeTab === "overview" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-               <div className="bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-8 rounded-3xl shadow-xl">
+               <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-8 rounded-3xl shadow-xl">
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">Trip Overview</h3>
                   <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg mb-6">
                     {tripParams?.destination} trip planned for {tripParams?.days} days. 
@@ -583,7 +583,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                </div>
                
                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl border-t-4 border-t-[#d97706] shadow-xl">
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl border-t-4 border-t-[#d97706] shadow-xl">
                      <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2"><Sparkles className="text-[#d97706]" size={20}/> Hidden Gems</h3>
                      <ul className="space-y-3">
                         {itineraryData?.hidden_gems?.map((g: string, i: number) => (
@@ -593,7 +593,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                         ))}
                      </ul>
                   </div>
-                  <div className="bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl border-t-4 border-t-[#d97706] shadow-xl">
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl border-t-4 border-t-[#d97706] shadow-xl">
                      <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2"><Utensils className="text-[#d97706]" size={20}/> Food to Try</h3>
                      <ul className="space-y-3">
                         {itineraryData?.food_recommendations?.map((f: string, i: number) => (
@@ -610,14 +610,14 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
           {activeTab === "budget" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                {itineraryData?.transit_options && itineraryData.transit_options.length > 0 && (
-                  <div className="bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl shadow-xl">
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 rounded-3xl shadow-xl">
                      <div className="border-b border-teal-100 dark:border-teal-900 pb-4 mb-6">
                         <h3 className="text-xl font-bold text-[#ffc174] flex items-center gap-2"><Navigation className="rotate-90" size={20}/> Source to Destination Transit</h3>
                         <p className="text-xs text-slate-600 dark:text-slate-300 mt-2 opacity-80">* Travel expenses from Source to Destination are separate from Local Budget.</p>
                      </div>
                      <div className="grid sm:grid-cols-3 gap-4">
                         {itineraryData.transit_options.map((opt: any, i: number) => (
-                           <div key={i} className="bg-[#f0fdfa]/50 dark:bg-slate-900/50 p-4 rounded-xl border border-teal-100 dark:border-teal-900 flex flex-col items-center text-center hover:border-[#ffc174]/50 transition-colors">
+                           <div key={i} className="bg-[#f0fdfa]/50 dark:bg-slate-900/80 p-4 rounded-xl border border-teal-100 dark:border-teal-900 flex flex-col items-center text-center hover:border-[#ffc174]/50 transition-colors">
                               <div className="font-bold text-slate-900 dark:text-slate-100 mb-1">{opt.mode}</div>
                               <div className="text-[#ffc174] font-black text-lg mb-1">{opt.estimated_cost}</div>
                               <div className="text-xs text-slate-600 dark:text-slate-300 flex items-center gap-1"><Clock size={12}/> {opt.duration}</div>
@@ -627,7 +627,7 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                   </div>
                )}
 
-               <div className="bg-white/60 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 md:p-8 rounded-3xl shadow-xl">
+               <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-teal-100 dark:border-teal-900 p-6 md:p-8 rounded-3xl shadow-xl">
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1">Local Estimated Costs</h3>
                   <p className="text-sm text-slate-600 dark:text-slate-300 mb-8">Breakdown based on standard pricing for {tripParams?.travelers || 2} traveler(s).</p>
                   
@@ -640,28 +640,28 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
                   </div>
 
                   <div className="space-y-4">
-                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/40 rounded-xl border border-teal-50 dark:border-teal-900">
+                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/80 rounded-xl border border-teal-50 dark:border-teal-900">
                         <div className="flex items-center gap-3">
                            <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg"><Bed size={20} /></div>
                            <span className="font-semibold text-slate-900 dark:text-slate-100">Stay & Accommodation</span>
                         </div>
                         <span className="font-bold text-slate-900 dark:text-slate-100">{itineraryData?.estimated_cost?.stay || "N/A"}</span>
                      </div>
-                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/40 rounded-xl border border-teal-50 dark:border-teal-900">
+                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/80 rounded-xl border border-teal-50 dark:border-teal-900">
                         <div className="flex items-center gap-3">
                            <div className="p-2 bg-[#d97706]/20 text-[#d97706] rounded-lg"><Utensils size={20} /></div>
                            <span className="font-semibold text-slate-900 dark:text-slate-100">Food & Dining</span>
                         </div>
                         <span className="font-bold text-slate-900 dark:text-slate-100">{itineraryData?.estimated_cost?.food || "N/A"}</span>
                      </div>
-                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/40 rounded-xl border border-teal-50 dark:border-teal-900">
+                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/80 rounded-xl border border-teal-50 dark:border-teal-900">
                         <div className="flex items-center gap-3">
                            <div className="p-2 bg-indigo-500/20 text-indigo-400 rounded-lg"><Car size={20} /></div>
                            <span className="font-semibold text-slate-900 dark:text-slate-100">Local Transport</span>
                         </div>
                         <span className="font-bold text-slate-900 dark:text-slate-100">{itineraryData?.estimated_cost?.transport || "N/A"}</span>
                      </div>
-                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/40 rounded-xl border border-teal-50 dark:border-teal-900">
+                     <div className="flex items-center justify-between p-4 bg-[#f0fdfa]/40 dark:bg-slate-900/80 rounded-xl border border-teal-50 dark:border-teal-900">
                         <div className="flex items-center gap-3">
                            <div className="p-2 bg-[#4fdbc8]/20 text-[#0f766e] rounded-lg"><Ticket size={20} /></div>
                            <span className="font-semibold text-slate-900 dark:text-slate-100">Entry Fees & Activities</span>
@@ -696,9 +696,9 @@ export default function ItineraryPage({ params }: { params: Promise<{ id: string
 
         {/* Right: Summary Sidebar */}
         <aside className="lg:col-span-4 lg:sticky lg:top-40 h-fit space-y-6">
-          <div className="bg-white/60 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl dark:shadow-none border border-teal-100 dark:border-teal-900">
+          <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl dark:shadow-none border border-teal-100 dark:border-teal-900">
             {/* Map Placeholder */}
-            <div className="h-48 w-full bg-[#f8fafc] dark:bg-slate-900 relative overflow-hidden group">
+            <div className="h-48 w-full bg-[#f8fafc] dark:bg-[#0f172a] relative overflow-hidden group">
                <div className="absolute inset-0 pointer-events-none opacity-80 z-0">
                   <MapWidget sourceCoords={null} destCoords={destCoords} />
                </div>
